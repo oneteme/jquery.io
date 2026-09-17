@@ -38,7 +38,7 @@
         "label": "Teradata",
         "value": "teradata",
         "type": "img",
-        "metadata": "/assets/images/teradata.jpg",
+        "metadata": "./assets/images/teradata.jpg",
         "hide": true
     },
     {

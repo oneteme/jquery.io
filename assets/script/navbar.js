@@ -27,7 +27,7 @@ function createNavbar(data, element) {
                         $("<span>").html(nav_element.title),
                         $("<img>", {
                             class: "nav-accordion accordion",
-                            src: "/assets/images/accordion.svg",
+                            src: "./assets/images/accordion.svg",
                         })
                     ),
                     $("<div>", {
