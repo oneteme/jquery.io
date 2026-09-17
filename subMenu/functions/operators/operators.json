@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Logic",
+    "items": "functions/operators/logic_comparators.json"
+  },
+  {
+    "title": "Arithmetic",
+    "items": "functions/operators/arithmetic.json"
+  },
+  {
+    "title": "Binary",
+    "items": "functions/operators/binary.json"
+  }
+]
