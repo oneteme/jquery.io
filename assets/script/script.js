@@ -228,7 +228,7 @@ function loadExample(exampleDiv) {
     }
 
     if (exampleDiv.attr("data-java")) {
-      utils.loadMarkDown("/tutorials/java/" + exampleDiv.attr("data-java"), $(".syntax-block.java")).then(() => {
+      utils.loadMarkDown("./tutorials/java/" + exampleDiv.attr("data-java"), $(".syntax-block.java")).then(() => {
         $(".syntax-block.java").show();
       });
     }
@@ -339,5 +339,5 @@ function loadTutorial(fileName) {
   $(".definition-element").hide();
   $(".definition-element.tutorial").show();
   $(".definition-element.whats_next").show();
-  utils.loadMarkDown("tutorials/" + fileName, $(".highlighted_code"));
+  utils.loadMarkDown("./tutorials/" + fileName, $(".highlighted_code"));
 }
