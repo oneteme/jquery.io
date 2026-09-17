@@ -140,7 +140,7 @@ $(document).ready(function () {
 
 //**************** FUNCTIONS ****************/
 function loadViews() {
-  fetch("/views.json")
+  fetch("./views.json")
     .then((response) => response.json())
     .then((data) => {
       $.each(data, (key, value) => {

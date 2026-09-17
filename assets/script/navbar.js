@@ -1,7 +1,7 @@
 import { javaMdFiles } from "./files.js";
 
 var navStyleFields = {};
-export function loadNavData(path = "/menu.json", element = $(".navbar-nav")) {
+export function loadNavData(path = "./menu.json", element = $(".navbar-nav")) {
     return new Promise(res => {
         fetch(path)
             .then((response) => response.json())
@@ -150,7 +150,7 @@ $(document).on(
     ".navbar-container .parent_title[isloaded='false']",
     (e) => {
 
-        const subMenuFile = "subMenu/" + $(e.currentTarget).attr("sub-menu"),
+        const subMenuFile = "./subMenu/" + $(e.currentTarget).attr("sub-menu"),
             title = $(e.currentTarget).find("span:first").html(),
             subNavDiv = $(".sub-nav[data-title='" + title + "']");
         loadNavData(subMenuFile, subNavDiv).then(() => {

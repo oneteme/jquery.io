@@ -1,7 +1,7 @@
 import * as utils from "./utils.js"
 
 export function loadSettings() {
-    fetch("/grid_settings.json")
+    fetch("./grid_settings.json")
         .then((response) => response.json())
         .then((data) => {
             

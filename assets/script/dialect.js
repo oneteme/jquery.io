@@ -3,7 +3,7 @@ import { loadJson } from "./utils.js";
 const defaultDialect = "h2";
 export function loadDialects() {
     $("#db-select-popup").empty()
-    loadJson("/dialect.json").then(dialects => {
+    loadJson("./dialect.json").then(dialects => {
         $("#db-select-popup").append(
             $("<div>", { class: "db-select-popup-arrow" })
         )
