@@ -1,7 +1,7 @@
 import { javaMdFiles } from "./files.js";
 
 var navStyleFields = {};
-export function loadNavData(path = "./menu.json", element = $(".navbar-nav")) {
+export function loadNavbarJSON(path = "./menu.json", element = $(".navbar-nav")) {
     return new Promise(res => {
         fetch(path)
             .then((response) => response.json())
@@ -38,8 +38,8 @@ function createNavbar(data, element) {
                 )
             );
         } else {
-            let seperatedTutoArr = setupNext(data, key);
-            setupNavItem(
+            let seperatedTutoArr = getSteps(data, key);
+            createSubNavItem(
                 nav_element,
                 element,
                 seperatedTutoArr[0],
@@ -55,7 +55,7 @@ function createNavbar(data, element) {
     });
 }
 
-function setupNavItem(navItem, divElement, next, prev) {
+function createSubNavItem(navItem, divElement, next, prev) { // no accordion (items like SELECT, HAVING, POWER,etc...)
     const javapath = (divElement.attr("data-title") ? divElement.attr("data-title").toLowerCase() + "/" : "") + (navItem.label ?? navItem.title).toLowerCase() + ".md",
         navFields = {
             class: "nav-item jq-example",
@@ -81,7 +81,7 @@ function setupNavItem(navItem, divElement, next, prev) {
     divElement.append($("<li>", navFields).html(navItem.title));
 }
 
-function setupNext(arr, key) {
+function getSteps(arr, key) {
     let next =
         key + 1 < arr.length && !("items" in arr[key + 1])
             ? arr[key + 1].title
@@ -147,22 +147,7 @@ export function toggleNavSubElements(e, subElement = ".sub-nav") {
 
 $(document).on(
     "click",
-    ".navbar-container .parent_title[isloaded='false']",
-    (e) => {
-
-        const subMenuFile = "./subMenu/" + $(e.currentTarget).attr("sub-menu"),
-            title = $(e.currentTarget).find("span:first").html(),
-            subNavDiv = $(".sub-nav[data-title='" + title + "']");
-        loadNavData(subMenuFile, subNavDiv).then(() => {
-            $(e.currentTarget).attr("isloaded", true);
-            toggleNavSubElements(e);
-        })
-    }
-);
-
-$(document).on(
-    "click",
-    ".navbar-container .parent_title[isloaded='true']",
+    ".navbar-container .parent_title",
     (e) => {
 
         if (!$(event.target).closest(".jq-example").length) {

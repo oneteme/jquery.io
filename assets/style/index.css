@@ -176,6 +176,7 @@ header {
   position: absolute;
   right: 12px;
 }
+
 /* DIALECT SELECT BEGIN */
 .db-select-wrapper {
   position: relative;
@@ -304,7 +305,32 @@ header {
   color: var(--jarvis-cyan);
   font-weight: 600;
 }
+
 /* DIALECT SELECT END */
+
+/* SERVER STATUS */
+#server-status {
+  font-family: "tabler-icons" !important;
+  font-size: 24px;
+  transition: color 0.3s;
+}
+
+#server-status.pulse {
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+}
+
 /*** HEADER  ***/
 
 /*** BUTTONS ***/
@@ -403,6 +429,7 @@ header {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--clr-text-muted)
 }
+
 /*** Scrollbar END ***/
 /*** TEXTS ***/
 #page-title {
@@ -782,7 +809,7 @@ pre {
 
 .option-box:hover {
   transform: translateY(-1px);
-  gap: 4px!important;
+  gap: 4px !important;
 }
 
 .option-box:hover::before {
@@ -1217,6 +1244,7 @@ pre {
   font-size: 20px;
   color: var(--jarvis-cyan);
 }
+
 /* Syntax URL and JAVA container */
 .syntax-blocks {
   display: flex;
@@ -1890,8 +1918,6 @@ code::before {
 
 
 /* Ultra-wide screens (2K, 4K) */
-@media screen and (min-width: 1920px) {
-
-}
+@media screen and (min-width: 1920px) {}
 
 /*** RESPONSIVE END ***/

@@ -1,15 +1,16 @@
 import { getAllJavaMd } from "./files.js";
 import { introNextStep, introNextStepCondition, isIntro } from "./intro-jq.js";
-import { hideNavBar, loadNavData, showNavBar, toggleNavBar } from "./navbar.js";
+import { hideNavBar, loadNavbarJSON, showNavBar, toggleNavBar } from "./navbar.js";
 import { loadSettings } from "./settings.js";
 import { hideLoading, showError, showLoading, showSuccess } from "./status.js";
 import { clearTable, displayTableResults } from "./table.js";
 import * as dialect from "./dialect.js";
 import * as utils from "./utils.js";
 import { initCodeBlocks } from "./code-blocks.js";
+import * as constants from "./constants.js";
+import { establishConnection,callServer } from "./server.js"
 
-var inputTimeOut,
-demoServer = "https://jquery-v5.onrender.com";
+var inputTimeOut;
 
 // TEST LIB
 console.log("Application loaded");
@@ -28,9 +29,11 @@ $(document).ready(function () {
   $(".navbar-nav").empty();
   dialect.loadDialects();
   initCodeBlocks();
-  getAllJavaMd().then(mdFiles => { console.log("files : ", mdFiles); loadNavData() })
+  // getAllJavaMd().then(mdFiles => { console.log("files : ", mdFiles); loadNavbarJSON() })
+  $(".navbar-nav").load("./navbar.html");
   loadSettings();
   loadViews();
+  establishConnection();
   tippy(".show-docs", {
     content: "Documentation",
     animation: 'scale',
@@ -290,11 +293,11 @@ function fetchJQData() {
       (columns ? "select=" + columns : "") +
       (filters ? "&" + filters : "");
 
-    $(".jq-link-display").attr("href", demoServer + fetchLink);
+    $(".jq-link-display").attr("href", constants.demoServer + fetchLink);
     $(".jq-link-display").html(fetchLink);
     $(".jq-link-display").css("visibility", "visible");
 
-    fetch(demoServer + fetchLink)
+    callServer(constants.demoServer + fetchLink)
       .then((response) => response.json())
       .then((data) => {
         setTimeout(() => {

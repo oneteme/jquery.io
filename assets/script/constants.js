@@ -1,0 +1,1 @@
+export const demoServer = "https://jquery-v5.onrender.com";

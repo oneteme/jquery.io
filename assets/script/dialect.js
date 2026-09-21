@@ -1,6 +1,5 @@
 import { loadJson } from "./utils.js";
 
-const defaultDialect = "h2";
 export function loadDialects() {
     $("#db-select-popup").empty()
     loadJson("./dialect.json").then(dialects => {
@@ -66,7 +65,6 @@ $(document).on(
 $(document).on('click', '.db-option', (e) => {
     setOptionActive($(e.currentTarget));
     $("#jq-execute").click();
-    // Change SQL or database code
 });
 
 function setOptionActive(option) {
