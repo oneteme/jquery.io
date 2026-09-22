@@ -8,7 +8,7 @@ Instead of manually writing the SQL structure needed to retrieve data, you descr
 
 ## Important: JQuery is not jQuery
 
-JQuery is **not** [jQuery](https://jquery.com/), the JavaScript library.
+JQuery is **not** [jQuery](https://jquery.com/), the **JavaScript** library.
 
 - **jQuery** is a JavaScript library used mainly for web development.
 - **JQuery** is a Java framework for working with database queries.
@@ -58,158 +58,15 @@ A single requirement can involve:
 - aggregations
 - date functions
 - calculations
+- and many others...
 
 JQuery provides an abstraction over this SQL structure.
 
 This means you can focus on the **data requirement** instead of manually building every part of the SQL query.
 
-## Simple example
-
-Suppose you have a `PRODUCTS_TABLE` containing:
-
-```sql
-PRODUCT_ID
-PRODUCT_NAME
-CATEGORY_ID
-UNIT
-PRICE
-```
-
-To retrieve the product name and price:
-
-```scss
-name,price
-```
-
-To calculate the average price:
-
-```scss
-price.avg
-```
-
-To filter products by price:
-
-```scss
-price.gt=20
-```
-
-The framework uses these operations to construct the corresponding database query.
-
-# Query operations
-
-JQuery supports many common database operations.
-
-### Aggregations
-
-```scss
-price.avg
-price.count
-price.sum
-price.min
-price.max
-```
-
-### Mathematical operations
-
-```scss
-price.abs
-price.ceil
-price.floor
-price.round
-price.sqrt
-price.pow(2)
-```
-
-### Date operations
-
-```scss
-orderDate.year
-orderDate.month
-orderDate.day
-orderDate.week
-```
-
-### String operations
-
-```scss
-unit.replace(bottles,bags)
-name.ilike=chai
-```
-
-### Window functions
-
-```scss
-rank
-rowNumber
-denseRank
-```
-
-These operations can require additional SQL structures such as `OVER`, `PARTITION BY`, or CTEs. JQuery handles the query structure needed for the operation.
-
-## Joins
-
-JQuery also supports relationships between tables.
-
-For example, the demo database contains:
-
-```sql
-CUSTOMERS_TABLE
-ORDERS_TABLE
-EMPLOYEES_TABLE
-SHIPPERS_TABLE
-PRODUCTS_TABLE
-CATEGORIES_TABLE
-SUPPLIERS_TABLE
-ORDERS_DETAILS_TABLE
-```
-
-These tables can be connected using joins.
-
-JQuery supports common join types such as:
-
-- `INNER JOIN`
-- `LEFT JOIN`
-- `RIGHT JOIN`
-- multiple joins
-- self joins
-
-This allows you to work with related data without manually constructing the complete SQL join structure.
-
-### Other functions (Made by JARVIS)
-
-```scss
-orderDate.semester
-orderDate.quarter
-orderDate.yearSemester
-orderDate.yearQuarter
-orderDate.yearMonth
-orderDate.monthDay
-orderDate.yearWeek
-```
-
-# Complex queries
-
-One of the main benefits of JQuery appears when a query becomes complicated.
-
-For example, a requirement such as:
-
-> Rank products by price within each category.
-
-can involve:
-
-- a ranking function
-- a window
-- partitioning
-- ordering
-- potentially additional query structure
-
-With JQuery, the user describes the operation they need, while the framework handles the SQL structure required to execute it.
-
-The same principle applies to aggregations, filtering, joins, CTEs, and subqueries.
-
 ## For developers
 
-JQuery is useful for Java developers who want to work with database queries without manually constructing large SQL statements.
+**JQuery** is useful for Java developers who want to work with database queries without manually constructing large SQL statements.
 
 It can help keep query definitions concise while still allowing complex database operations.
 
@@ -247,13 +104,13 @@ price.avg
 Or:
 
 ```text
-Show products ranked by price.
+Show product names whose price is higher than 40$ and order by price (Ascending)
 ```
 
 can be represented by:
 
 ```scss
-rank.over(partition(cat_id).order(price.desc))
+name&price.gt=40&order=price.asc
 ```
 
 This makes it possible for applications to build interfaces where users describe or select the data they need without having to manually write SQL.
@@ -285,6 +142,164 @@ JQuery is built around a simple concept:
 You choose the columns and operations you need.
 
 JQuery handles the query structure.
+
+## Simple example
+
+Suppose you have a `PRODUCTS_TABLE` containing:
+
+```sql
+PRODUCT_ID
+PRODUCT_NAME
+CATEGORY_ID
+UNIT
+PRICE
+```
+
+To retrieve the product name and price:
+
+```scss
+name,price
+```
+
+To calculate the **average** price we use `.avg`
+
+```scss
+price.avg
+```
+
+To filter products by price we use `.gt`(**G**reater**T**han)
+
+```scss
+price.gt=20
+```
+
+The framework uses these operations to construct the corresponding database query.
+
+# Query operations
+
+JQuery supports many common database operations.
+
+### Aggregations
+
+In **SQL** These functions require using `GROUP BY` or `HAVING` but **JQuery** does this **automatically**
+
+```scss
+price.avg
+price.count
+price.sum
+price.min
+price.max
+```
+
+### Mathematical operations
+
+```scss
+price.abs
+price.ceil
+price.floor
+price.round
+price.sqrt
+price.pow(2)
+```
+
+### Date operations
+
+```scss
+orderDate.year
+orderDate.month
+orderDate.day
+orderDate.week
+```
+
+### String operations
+
+```php
+unit.replace(bottles,bags)
+name.ilike=chai
+```
+
+### Window functions
+
+These operations can require additional SQL structures such as `OVER`, `PARTITION BY`, or CTEs. JQuery handles the query structure needed for the operation.
+
+```scss
+rank
+rowNumber
+denseRank
+```
+
+### Cast functions 
+
+```scss
+price.varchar
+price.integer
+price.bigint
+price.decimal
+orderDate.timestamp
+```
+
+## Joins
+
+JQuery also supports relationships between tables.
+
+For example, the demo database contains:
+
+```sql
+CUSTOMERS_TABLE
+ORDERS_TABLE
+EMPLOYEES_TABLE
+SHIPPERS_TABLE
+PRODUCTS_TABLE
+CATEGORIES_TABLE
+SUPPLIERS_TABLE
+ORDERS_DETAILS_TABLE
+```
+
+These tables can be connected using joins.
+
+JQuery supports common join types such as:
+
+- `INNER JOIN`
+- `LEFT JOIN`
+- `RIGHT JOIN`
+- `SELF JOIN`
+
+This allows you to work with related data without manually constructing the complete SQL join structure.
+
+### Other functions (Made by JARVIS)
+
+These are functions that do not exist at all in **SQL** but can be used in **JQuery** with any database.
+
+```scss
+orderDate.semester
+orderDate.quarter
+orderDate.yearSemester
+orderDate.yearQuarter
+orderDate.yearMonth
+orderDate.monthDay
+orderDate.yearWeek
+```
+
+# Complex queries
+
+One of the main benefits of **JQuery** appears when a query becomes complicated.
+
+For example, a requirement such as:
+
+> Rank products by price within each category.
+
+can involve:
+
+- a ranking function
+- a window
+- partitioning
+- ordering
+- potentially additional query structure
+- grouping columns
+
+With **JQuery**, the user describes the operation they need, while the framework handles the SQL structure required to execute it.
+
+The same principle applies to aggregations, filtering, joins, CTEs, and subqueries.
 
 ## In short
 

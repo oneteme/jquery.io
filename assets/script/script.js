@@ -7,7 +7,7 @@ import * as dialect from "./dialect.js";
 import * as utils from "./utils.js";
 import { initCodeBlocks } from "./code-blocks.js";
 import * as constants from "./constants.js";
-import { establishConnection, callServer } from "./server.js"
+import { callServer } from "./server.js"
 
 var inputTimeOut;
 
@@ -26,7 +26,6 @@ jQuery(function () {
   });
   loadSettings();
   loadViews();
-  establishConnection();
   tippy(".show-docs", {
     content: "Documentation",
     animation: 'scale',
