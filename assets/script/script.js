@@ -1,6 +1,5 @@
-import { getAllJavaMd } from "./files.js";
 import { introNextStep, introNextStepCondition, isIntro } from "./intro-jq.js";
-import { hideNavBar, loadNavbarJSON, showNavBar, toggleNavBar } from "./navbar.js";
+import { hideNavBar, showNavBar, toggleNavBar } from "./navbar.js";
 import { loadSettings } from "./settings.js";
 import { hideLoading, showError, showLoading, showSuccess } from "./status.js";
 import { clearTable, displayTableResults } from "./table.js";
@@ -8,29 +7,23 @@ import * as dialect from "./dialect.js";
 import * as utils from "./utils.js";
 import { initCodeBlocks } from "./code-blocks.js";
 import * as constants from "./constants.js";
-import { establishConnection,callServer } from "./server.js"
+import { establishConnection, callServer } from "./server.js"
 
 var inputTimeOut;
 
-// TEST LIB
-console.log("Application loaded");
-
-console.log("jQuery:", typeof $);
-console.log("DataTables:", typeof DataTable);
-console.log("Intro:", typeof introJs);
-console.log("Highlight.js:", typeof hljs);
-console.log("Marked:", typeof marked);
-console.log("SQL Formatter:", typeof sqlFormatter);
-console.log("Tippy:", typeof tippy);
-
 //**************** EVENT LISTENERS ****************/
-$(document).ready(function () {
+jQuery(function () {
   hljs.highlightAll();
   $(".navbar-nav").empty();
   dialect.loadDialects();
   initCodeBlocks();
-  // getAllJavaMd().then(mdFiles => { console.log("files : ", mdFiles); loadNavbarJSON() })
-  $(".navbar-nav").load("./navbar.html");
+  $(".navbar-nav").load("./navbar.html", function () {
+    tippy("li[data-tippy-content]", {
+      animation: 'scale',
+      placement: 'top',
+      arrow: true
+    });
+  });
   loadSettings();
   loadViews();
   establishConnection();
