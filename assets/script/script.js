@@ -50,6 +50,15 @@ jQuery(function () {
     hideOnClick: false,
     interactive: true
   });
+
+  $(".jq-btn").on("click", (e) => {
+    $("#jq-nav-live").click();
+  })
+  $(".header-link").on("click", (e) => {
+    $(".header-link").removeClass("active");
+    $(e.currentTarget).addClass("active")
+  });
+
   $("#jq-execute").on("click", (e) => {
     introNextStep(100);
     $("#query-form").submit();
