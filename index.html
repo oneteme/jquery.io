@@ -262,297 +262,1404 @@
       </div>
     </div>
   </div>
+
   <div class="jq-docs-container">
 
-
-    <div class="jq-head">
-      <h1>JavaQuery</h1>
-      <div class="jq-btn btn-class">Try JQuery</div>
-    </div>
-    <p>JavaQuery is a Java framework that simplifies database querying.</p>
-    <p>Instead of manually writing the SQL structure needed to retrieve data, you describe <strong>what data you want
-        and what you want to do with it</strong>, and JQuery handles the query construction.</p>
-    <p class="jq-key">You say what you want. JQuery handles the query.</p>
-
-    <h2>Important: JQuery is not jQuery</h2>
-    <div class="jq-compare">
-      <div class="no">
-        <h4>jQuery</h4>
-        <p>A <strong>JavaScript</strong> library used mainly for web development.</p>
-        <p><a href="https://jquery.com/">jquery.com</a></p>
+    <div class="jq-intro" style="position: relative;">
+      <div class="jq-head">
+        <h1>JavaQuery</h1>
       </div>
-      <div class="yes">
-        <h4>JQuery</h4>
-        <p>A <strong>Java</strong> framework for working with database queries.</p>
+      <div class="jq-intro-header">
+        <div class="intro-text d-flex-col">
+          <p class="jq-lead jq2-title">
+            Et si l'accès à vos données devenait <em>plus simple</em> ?
+          </p>
+
+          <p>
+            Vos applications évoluent. Vos besoins augmentent, vos données se multiplient et les demandes
+            se diversifient. Vous devez alors :
+          </p>
+
+          <ul class="jq2-needs">
+            <li data-example="/customers?select=name,city&country=France"><i class="ti ti-search"></i><span>Rechercher
+                une informations</span></li>
+            <li data-example="/customers?select=count,country&count.gt(10) // gt=>Greater Than"><i
+                class="ti ti-category"></i><span>Filtrer et/ou grouper des données</span></li>
+            <li data-example="/products?select=price.minus(price.multiply(25).divide(100))&cat_id=1,2,3"><i
+                class="ti ti-calculator"></i><span>Calculer des indicateurs</span></li>
+            <!-- <li><i class="ti ti-git-merge-outlined"></i><span>Combiner plusieurs sources de données</span></li> -->
+          </ul>
+
+          <div class="jq2-quote">
+            <p>À mesure que ces besoins augmentent, leur mise en œuvre devient plus complexe.</p>
+            <p>Pourquoi consacrer autant d'efforts à la manière d'obtenir les données, lorsque vous savez déjà
+              ce que vous souhaitez obtenir ?</p>
+          </div>
+          <p class="jq-key">Moins de complexité. Plus de temps pour l'essentiel.</p>
+          <div class="jq-btn btn-class" style="width: fit-content;">Testez en Live</div>
+        </div>
+
+
+        <div class="jq2-mini-demo">
+          <div class="jq2-code jq2-with">
+            <div class="jq2-bar">
+              <div class="jq2-sel">
+                <select id="jq2-select">
+                  <option>Recherche d'informations</option>
+                  <option selected>Calculs d'indicateurs</option>
+                  <option>Filtrer et/ou grouper des données</option>
+                  <option>Combiner plusieurs sources de données</option>
+                </select>
+              </div>
+            </div>
+            <div style="position: relative;">
+              <pre><code id="with-jq-code" class="language-scss hljs">select=cat_id&amp;price.avg.gt(10)&amp;rankProducts=1</code></pre>
+              <span class="jq2-lang">JQuery</span>
+            </div>
+          </div>
+          <div class="jq2-code jq2-without" style="position: relative;">
+
+            <pre><code id="no-jq-code" class="language-sql hljs">WITH g1 AS (
+    SELECT
+      *,
+      RANK() OVER (
+        PARTITION BY
+          s_v1.CATEGORY_ID
+        ORDER BY
+          s_v1.PRICE DESC
+      ) AS "OVER_429238734"
+    FROM
+      PRODUCTS_TABLE s_v1
+  )
+SELECT
+  g1.CATEGORY_ID AS "catId"
+FROM
+  g1
+WHERE
+  g1."OVER_429238734" = 1
+GROUP BY
+  "catId"
+HAVING
+  AVG(g1.PRICE) &gt; 10.0</code></pre>
+            <span class="jq2-lang">Sans JQuery</span>
+          </div>
+        </div>
       </div>
-    </div>
-    <p class="jq-key">The two projects are completely unrelated.</p>
 
-    <h2>The main idea</h2>
-    <p>With JQuery, you describe database operations directly on your columns. Each expression below is a column
-      followed by the operation you want.</p>
-    <div class="jq-ops">
-      <div class="r"><span class="q">price<b>.avg</b></span><span class="d">The average price</span></div>
-      <div class="r"><span class="q">orderDate<b>.year</b></span><span class="d">The year from the order date</span>
+      <div class="jq2-answer">
+        <strong>Découvrez JQuery!</strong>
+        Une solution conçue par l'équipe <code>JARVIS</code> qui simplifie l'accès aux données.<br>
+        Vous décrivez le résultat attendu (les données, les calculs, les filtres) et JQuery génère et exécute
+        la requête adaptée à votre base de données.
       </div>
-      <div class="r"><span class="q">price<b>.pow</b>(<i>2</i>)</span><span class="d">The price raised to the power of
-          2</span></div>
-    </div>
-    <p>You describe the operation, and JQuery handles the SQL required to perform it.</p>
 
-    <h2>Why JQuery?</h2>
-    <p>SQL can become complicated when a query requires more than a simple <code>SELECT</code>. A single requirement can
-      involve:</p>
-    <ul>
-      <li><code>SELECT</code></li>
-      <li><code>WHERE</code></li>
-      <li><code>GROUP BY</code></li>
-      <li><code>HAVING</code></li>
-      <li><code>JOIN</code></li>
-      <li>subqueries</li>
-      <li>CTEs</li>
-      <li>window functions</li>
-      <li>aggregations</li>
-      <li>date functions</li>
-      <li>calculations</li>
-      <li>and many others...</li>
-    </ul>
-    <p>JQuery provides an abstraction over this SQL structure, so you can focus on the <strong>data requirement</strong>
-      instead of building every part of the SQL query by hand.</p>
 
-    <h2>For developers</h2>
-    <p><strong>JQuery</strong> is useful for Java developers who want to work with database queries without manually
-      constructing large SQL statements. It keeps query definitions concise while still allowing complex database
-      operations.</p>
-    <div class="jq-compare">
-      <div class="no">
-        <h4>Instead of asking</h4>
-        <p>How do I write all the SQL?</p>
+
+      <h2>Important : <strong>J</strong>Query n'est pas <strong>j</strong>Query</h2>
+      <div class="jq-compare">
+        <div class="no">
+          <h4><a href="https://jquery.com/" target="_blank">jQuery</a></h4>
+          <p>Une bibliothèque <strong>JavaScript</strong>, utilisée principalement pour le développement web.</p>
+          <p></p>
+        </div>
+        <div class="yes">
+          <h4><a href="https://mvnrepository.com/artifact/io.github.oneteme/jquery" target="_blank">JQuery</a></h4>
+          <p>Un framework <strong>Java</strong> pour travailler avec les requêtes de base de données.</p>
+        </div>
       </div>
-      <div class="yes">
-        <h4>Ask yourself</h4>
-        <p>What data do I need?</p>
-        <p>What should I calculate?</p>
-        <p>How should I filter it?</p>
-        <p>How are the tables related?</p>
+      <p class="jq-key">Les deux projets n'ont strictement aucun lien.</p>
+
+      <h2>Une bibliothèque, pas un ORM</h2>
+
+      <p>
+        JQuery est une <strong>bibliothèque</strong> dédiée à l'accès aux données.
+        Elle permet de construire et d'exécuter les requêtes nécessaires pour obtenir les informations recherchées.
+      </p>
+
+      <div class="jq-compare3">
+
+        <div class="card lib">
+          <h4>
+            <i class="ti ti-puzzle"></i>
+            JQuery — bibliothèque
+          </h4>
+
+          <ul>
+            <li>Vous décrivez ce que vous souhaitez obtenir, JQuery construit la requête nécessaire.</li>
+            <li>Les résultats correspondent directement aux données recherchées.</li>
+            <li>JQuery se concentre sur l'accès aux données.</li>
+            <li>Il s'intègre à votre environnement existant sans remplacer votre architecture.</li>
+          </ul>
+        </div>
+
+
+        <div class="card orm">
+          <h4>
+            <i class="ti ti-topology-star-3"></i>
+            ORM
+          </h4>
+
+          <ul>
+            <li>Vous définissez des entités représentant les données.</li>
+            <li>L'ORM transforme les données en objets.</li>
+            <li>Il gère notamment les relations entre les entités.</li>
+            <li>Il ajoute une couche d'abstraction entre l'application et la base de données.</li>
+          </ul>
+        </div>
+
       </div>
-    </div>
 
-    <h2>For non-SQL users</h2>
-    <p>JQuery is also useful when the person defining a query understands the data but does not know SQL.</p>
-    <div class="jq-ask"><small>In plain words</small>Show the average product price.</div>
-    <div class="jq-code">
-      <div class="hd">JQuery</div>
-      <div class="bd">
-        <div>price<b>.avg</b></div>
+      <p class="jq-key">
+        <strong>Un ORM gère vos objets, JQuery facilite l'accès à vos données.</strong>
+      </p>
+
+
+      <h2>Les points forts de JQuery</h2>
+
+
+      <div class="jq3-rows">
+
+        <!-- ===== 1. Gain de temps (texte à gauche, visuel à droite) ===== -->
+        <article class="jq3-row">
+          <div class="jq3-text">
+            <div class="jq3-ico"><i class="ti ti-clock"></i></div>
+            <h3>Gain de temps</h3>
+            <p>
+              Une même API peut répondre à différents besoins : sélectionner, filtrer, trier ou transformer
+              les données selon la demande.
+            </p>
+            <p><strong>Moins de développements, plus de temps pour répondre aux besoins.</strong></p>
+          </div>
+
+          <div class="jq3-visual">
+            <div class="jq3-api">
+              <div class="jq3-api-head">
+                <i class="ti ti-api"></i>
+                <code>/customers</code>
+                <span>Une seule API, trois demandes</span>
+              </div>
+              <ul class="jq3-queries jq3-stagger">
+                <li>
+                  <code>/customers?select=name,country</code>
+                  <span>Afficher le nom et le pays de tous les clients</span>
+                </li>
+                <li>
+                  <code>/customers?select=name,city&amp;country=France</code>
+                  <span>Afficher le nom et la ville des clients d'origine française</span>
+                </li>
+                <li>
+                  <code>/customers?select=count,country</code>
+                  <span>Afficher le nombre de clients par pays</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+
+        <!-- ===== 2. Accessibilité (inversé : visuel à gauche) ===== -->
+        <article class="jq3-row jq3-row--rev">
+          <div class="jq3-text">
+            <div class="jq3-ico"><i class="ti ti-accessible"></i></div>
+            <h3>Accessibilité</h3>
+            <p>
+              Comprendre les principales notions liées à la manipulation des données suffit pour accéder
+              simplement aux données recherchées.
+            </p>
+            <p>La complexité nécessaire pour les obtenir est ensuite prise en charge par JQuery.</p>
+          </div>
+
+          <div class="jq3-visual">
+            <!-- Graphe existant, réutilisé tel quel -->
+            <div class="jq-flow jq3-stagger">
+              <div>Ce que vous voulez<small>Votre besoin</small></div>
+              <div class="a">→</div>
+              <div class="m">JQuery<small>Construit la requête</small></div>
+              <div class="a">→</div>
+              <div>Requête<small>Générée pour vous</small></div>
+              <div class="a">→</div>
+              <div>Base de données<small>Retourne les données</small></div>
+            </div>
+            <p class="jq3-caption">JQuery se place entre votre application et votre base de données.</p>
+          </div>
+        </article>
+
+
+        <!-- ===== 3. Compatibilité (texte à gauche, visuel à droite) ===== -->
+        <article class="jq3-row">
+          <div class="jq3-text">
+            <div class="jq3-ico"><i class="ti ti-database"></i></div>
+            <h3>Compatibilité</h3>
+            <p>
+              Compatible avec différentes bases de données, une même approche permet d'accéder aux données,
+              quelle que soit la technologie utilisée.
+            </p>
+            <p><strong>JQuery détecte le dialecte de votre base et génère la requête adaptée.</strong></p>
+          </div>
+
+          <div class="jq3-visual">
+            <div class="jq-flow jq3-stagger">
+              <div>Ce que vous voulez<small>Votre besoin</small></div>
+              <div class="a">→</div>
+              <div class="m jq3-multi">
+                JQuery
+                <ol class="jq3-sub">
+                  <li>Détecte le dialecte</li>
+                  <li>Construit la requête</li>
+                </ol>
+                <span class="jq3-chips"><b>PostgreSQL</b><b>TeraData</b><b>Oracle</b><b>…</b></span>
+              </div>
+              <div class="a">→</div>
+              <div>Requête<small>Adaptée au dialecte</small></div>
+              <div class="a">→</div>
+              <div>Base de données<small>Retourne les données</small></div>
+            </div>
+          </div>
+        </article>
+
       </div>
-    </div>
-    <div class="jq-ask"><small>In plain words</small>Show product names whose price is higher than 40$ and order by
-      price (Ascending).</div>
-    <div class="jq-code">
-      <div class="hd">JQuery</div>
-      <div class="bd">
-        <div>name<s>&amp;</s>price<b>.gt</b><s>=</s><i>40</i><s>&amp;</s>order<s>=</s>price<b>.asc</b></div>
+
+      <h2>Comment fonctionne JQuery ?</h2>
+
+      <p>
+        JQuery se place entre votre application et votre base de données.
+        Vous indiquez les données et les opérations souhaitées, puis JQuery construit la requête nécessaire.
+      </p>
+
+      <div class="jq-flow">
+
+        <div>
+          Ce que vous voulez
+          <small>Votre besoin</small>
+        </div>
+
+        <div class="a">→</div>
+
+        <div class="m">
+          JQuery
+          <small>Construit la requête</small>
+        </div>
+
+        <div class="a">→</div>
+
+        <div>
+          Requête
+          <small>Générée pour vous</small>
+        </div>
+
+        <div class="a">→</div>
+
+        <div>
+          Base de données
+          <small>Retourne les données</small>
+        </div>
+
       </div>
-    </div>
-    <p>Each part of that query is one piece of the request:</p>
-    <div class="jq-ops">
-      <div class="r"><span class="q">name</span><span class="d">Show the product name</span></div>
-      <div class="r"><span class="q">price<b>.gt</b><s>=</s><i>40</i></span><span class="d">Keep only products with a
-          price above 40</span></div>
-      <div class="r"><span class="q">order<s>=</s>price<b>.asc</b></span><span class="d">Sort by price, lowest
-          first</span></div>
-    </div>
-    <p>This makes it possible for applications to build interfaces where users describe or select the data they need
-      without writing SQL.</p>
 
-    <h2>JQuery as an abstraction layer</h2>
-    <p>JQuery sits between the application and the database.</p>
-    <div class="jq-flow">
-      <div>What you want<small>Your query definition</small></div>
-      <div class="a">→</div>
-      <div class="m">JQuery<small>Builds the query</small></div>
-      <div class="a">→</div>
-      <div>SQL<small>Generated for you</small></div>
-      <div class="a">→</div>
-      <div>Database<small>Runs the query</small></div>
-    </div>
-    <p>The user does not have to manage every SQL detail. JQuery takes the higher-level query definition and builds the
-      database query required to execute it.</p>
+      <p>
+        Vous n'avez pas à gérer chaque détail nécessaire pour obtenir le résultat.
+        JQuery prend en charge cette partie afin de vous permettre de vous concentrer sur les données recherchées.
+      </p>
 
-    <h2>The philosophy</h2>
-    <p>JQuery is built around a simple concept:</p>
-    <p class="jq-key">Describe the data you want, not the SQL required to obtain it.</p>
-    <p>You choose the columns and operations you need. JQuery handles the query structure.</p>
 
-    <h2>Simple example</h2>
-    <p>Suppose you have a <code>PRODUCTS_TABLE</code> with these columns:</p>
-    <div class="jq-code">
-      <div class="hd">PRODUCTS_TABLE</div>
-      <div class="bd">
-        <div>PRODUCT_ID</div>
-        <div>PRODUCT_NAME</div>
-        <div>CATEGORY_ID</div>
-        <div>UNIT</div>
-        <div>PRICE</div>
+      <h2>Une approche centrée sur les données</h2>
+
+      <p>
+        Avec JQuery, l'essentiel est de savoir quelles données vous souhaitez obtenir et quelles opérations
+        doivent être réalisées.
+      </p>
+
+      <div class="jq-compare">
+
+        <div class="no">
+          <h4>Plutôt que de vous demander</h4>
+
+          <p>
+            Comment écrire la requête nécessaire ?
+          </p>
+        </div>
+
+        <div class="yes">
+          <h4>Concentrez-vous sur votre besoin</h4>
+
+          <p>
+            De quelles données ai-je besoin ?
+          </p>
+
+          <p>
+            Que dois-je calculer ?
+          </p>
+
+          <p>
+            Comment dois-je les filtrer ?
+          </p>
+
+          <p>
+            Comment mes données sont-elles liées ?
+          </p>
+        </div>
+
       </div>
-    </div>
-    <div class="jq-ops">
-      <div class="r"><span class="q">name<s>,</s>price</span><span class="d">Retrieve the product name and price</span>
+
+
+      <!-- <h2>Exemple</h2>
+
+      <p>
+        Imaginons une table <code>PRODUCTS_TABLE</code> contenant les informations suivantes :
+      </p>
+
+      <div class="jq-code">
+
+        <div class="hd">PRODUCTS_TABLE</div>
+
+        <div class="bd">
+
+          <div>
+            Nom de la colonne dans <strong>la base de données</strong>
+            &rarr;
+            Nom de la colonne en <strong>JQuery</strong>
+          </div>
+
+          <div>PRODUCT_ID &rarr; <code>id</code></div>
+          <div>PRODUCT_NAME &rarr; <code>name</code></div>
+          <div>CATEGORY_ID &rarr; <code>cat_id</code></div>
+          <div>UNIT &rarr; <code>unit</code></div>
+          <div>PRICE &rarr; <code>price</code></div>
+
+        </div>
+
       </div>
-      <div class="r"><span class="q">price<b>.avg</b></span><span class="d">Calculate the <strong>average</strong>
-          price</span></div>
-      <div class="r"><span class="q">price<b>.gt</b><s>=</s><i>20</i></span><span class="d">Filter by price with
-          <code>.gt</code> (<strong>G</strong>reater<strong>T</strong>han)</span></div>
-    </div>
-    <p>The framework uses these operations to construct the corresponding database query.</p>
 
-    <h2>Query operations</h2>
-    <p>JQuery supports many common database operations.</p>
 
-    <h3>Aggregations</h3>
-    <p>In <strong>SQL</strong> these functions require <code>GROUP BY</code> or <code>HAVING</code>, but
-      <strong>JQuery</strong> does this <strong>automatically</strong>.
-    </p>
-    <div class="jq-ops">
-      <div class="r"><span class="q">price<b>.avg</b></span><span class="d">Average value</span></div>
-      <div class="r"><span class="q">price<b>.count</b></span><span class="d">Number of values</span></div>
-      <div class="r"><span class="q">price<b>.sum</b></span><span class="d">Total of all values</span></div>
-      <div class="r"><span class="q">price<b>.min</b></span><span class="d">Lowest value</span></div>
-      <div class="r"><span class="q">price<b>.max</b></span><span class="d">Highest value</span></div>
-    </div>
+      <div class="jq-ops">
 
-    <h3>Mathematical operations</h3>
-    <div class="jq-ops">
-      <div class="r"><span class="q">price<b>.abs</b></span><span class="d">Absolute value</span></div>
-      <div class="r"><span class="q">price<b>.ceil</b></span><span class="d">Round up</span></div>
-      <div class="r"><span class="q">price<b>.floor</b></span><span class="d">Round down</span></div>
-      <div class="r"><span class="q">price<b>.round</b></span><span class="d">Round to the nearest whole number</span>
+        <div class="r">
+          <span class="q">select=name,price</span>
+          <span class="d">
+            Récupérer le nom et le prix du produit
+          </span>
+        </div>
+
+        <div class="r">
+          <span class="q">select=price.avg,cat_id</span>
+          <span class="d">
+            Calculer la moyenne des prix par catégorie
+          </span>
+        </div>
+
+        <div class="r">
+          <span class="q">select=name&price.gt=20</span>
+          <span class="d">
+            Récupérer le nom des produits dont le prix est supérieur à 20
+          </span>
+        </div>
+
       </div>
-      <div class="r"><span class="q">price<b>.sqrt</b></span><span class="d">Square root</span></div>
-      <div class="r"><span class="q">price<b>.pow</b>(<i>2</i>)</span><span class="d">Raise to a power (here, 2)</span>
+
+      <p>
+        JQuery utilise ces opérations pour construire la requête correspondante.
+      </p> -->
+
+
+      <h2>En résumé</h2>
+
+      <p>
+        JQuery simplifie l'accès aux données en vous permettant de vous concentrer sur ce que vous souhaitez obtenir.
+      </p>
+
+      <ul>
+        <li>Gagner du temps en réduisant les développements nécessaires</li>
+        <li>Accéder plus simplement aux données</li>
+        <li>Filtrer, transformer et calculer les données</li>
+        <li>Regrouper et comparer les résultats</li>
+        <li>Utiliser les jointures et les opérations avancées</li>
+        <li>Travailler avec différentes bases de données</li>
+      </ul>
+
+      <p class="jq-key big">
+        Vous décrivez ce que vous voulez. JQuery s'occupe de la requête.
+      </p>
+
+
+      <div class="jq-cta">
+
+        <div>
+          <h3>Découvrez JQuery</h3>
+          <p>
+            Essayez JQuery sur les données de démonstration et découvrez une manière plus simple
+            d'accéder aux données.
+          </p>
+        </div>
+
+        <div class="jq-btn btn-class">
+          Essayer JQuery
+        </div>
+
       </div>
-    </div>
 
-    <h3>Date operations</h3>
-    <div class="jq-ops">
-      <div class="r"><span class="q">orderDate<b>.year</b></span><span class="d">The year of the date</span></div>
-      <div class="r"><span class="q">orderDate<b>.month</b></span><span class="d">The month of the date</span></div>
-      <div class="r"><span class="q">orderDate<b>.day</b></span><span class="d">The day of the date</span></div>
-      <div class="r"><span class="q">orderDate<b>.week</b></span><span class="d">The week of the date</span></div>
     </div>
-
-    <h3>String operations</h3>
-    <div class="jq-ops">
-      <div class="r"><span class="q">unit<b>.replace</b>(<i>bottles,bags</i>)</span><span class="d">Replace
-          <code>bottles</code> with <code>bags</code> in the unit</span></div>
-      <div class="r"><span class="q">name<b>.ilike</b><s>=</s><i>chai</i></span><span class="d">Case-insensitive match
-          on the name</span></div>
-    </div>
-
-    <h3>Window functions</h3>
-    <p>These operations can require additional SQL structures such as <code>OVER</code>, <code>PARTITION BY</code>, or
-      CTEs. JQuery handles the query structure needed for the operation.</p>
-    <div class="jq-ops">
-      <div class="r"><span class="q">rank</span><span class="d">Position in the ordering; ties share a rank</span></div>
-      <div class="r"><span class="q">rowNumber</span><span class="d">A unique number for each row</span></div>
-      <div class="r"><span class="q">denseRank</span><span class="d">Like <code>rank</code>, but with no gaps after
-          ties</span></div>
-    </div>
-
-    <h3>Cast functions</h3>
-    <p>Convert a value from one type to another.</p>
-    <div class="jq-ops">
-      <div class="r"><span class="q">price<b>.varchar</b></span><span class="d">Convert to text</span></div>
-      <div class="r"><span class="q">price<b>.integer</b></span><span class="d">Convert to a whole number</span></div>
-      <div class="r"><span class="q">price<b>.bigint</b></span><span class="d">Convert to a large whole number</span>
+    <!-- <div class="jq-intro" >
+      <div class="jq-head">
+        <h1>JavaQuery</h1>
+        <div class="jq-btn btn-class">Try JQuery</div>
       </div>
-      <div class="r"><span class="q">price<b>.decimal</b></span><span class="d">Convert to a decimal number</span></div>
-      <div class="r"><span class="q">orderDate<b>.timestamp</b></span><span class="d">Convert to a timestamp</span>
-      </div>
-    </div>
 
-    <h2>Joins</h2>
-    <p>JQuery also supports relationships between tables. For example, the demo database contains:</p>
-    <div class="jq-code">
-      <div class="hd">Demo database tables</div>
-      <div class="bd">
-        <div>CUSTOMERS_TABLE</div>
-        <div>ORDERS_TABLE</div>
-        <div>EMPLOYEES_TABLE</div>
-        <div>SHIPPERS_TABLE</div>
-        <div>PRODUCTS_TABLE</div>
-        <div>CATEGORIES_TABLE</div>
-        <div>SUPPLIERS_TABLE</div>
-        <div>ORDERS_DETAILS_TABLE</div>
-      </div>
-    </div>
-    <p>These tables can be connected using joins. JQuery supports common join types such as:</p>
-    <ul>
-      <li><code>INNER JOIN</code></li>
-      <li><code>LEFT JOIN</code></li>
-      <li><code>RIGHT JOIN</code></li>
-      <li><code>SELF JOIN</code></li>
-    </ul>
-    <p>This lets you work with related data without manually constructing the complete SQL join structure.</p>
+      <p>Stop writing SQL. Start describing data.</p>
 
-    <h3>Other functions (Made by JARVIS)</h3>
-    <p>These functions do not exist at all in <strong>SQL</strong>, but you can use them in <strong>JQuery</strong> with
-      any database.</p>
-    <div class="jq-ops">
-      <div class="r"><span class="q">orderDate<b>.semester</b></span><span class="d">The semester of the date</span>
-      </div>
-      <div class="r"><span class="q">orderDate<b>.quarter</b></span><span class="d">The quarter of the date</span></div>
-      <div class="r"><span class="q">orderDate<b>.yearSemester</b></span><span class="d">Year and semester
-          together</span></div>
-      <div class="r"><span class="q">orderDate<b>.yearQuarter</b></span><span class="d">Year and quarter together</span>
-      </div>
-      <div class="r"><span class="q">orderDate<b>.yearMonth</b></span><span class="d">Year and month together</span>
-      </div>
-      <div class="r"><span class="q">orderDate<b>.monthDay</b></span><span class="d">Month and day together</span></div>
-      <div class="r"><span class="q">orderDate<b>.yearWeek</b></span><span class="d">Year and week together</span></div>
-    </div>
+      <p>JavaQuery is a Java framework that simplifies database querying. Instead of manually writing the SQL structure
+        needed to retrieve data, you describe <strong>what data you want and what you want to do with it</strong>, and
+        JQuery handles the query construction.</p>
 
-    <h2>Complex queries</h2>
-    <p>One of the main benefits of <strong>JQuery</strong> appears when a query becomes complicated. For example, a
-      requirement such as:</p>
-    <div class="jq-ask"><small>In plain words</small>Rank products by price within each category.</div>
-    <p>can involve:</p>
-    <ul>
-      <li>a ranking function</li>
-      <li>a window</li>
-      <li>partitioning</li>
-      <li>ordering</li>
-      <li>potentially additional query structure</li>
-      <li>grouping columns</li>
-    </ul>
-    <p>With <strong>JQuery</strong>, you describe the operation you need, and the framework handles the SQL structure
-      required to execute it. The same applies to aggregations, filtering, joins, CTEs, and subqueries.</p>
+      <p>And it doesn't just generate SQL &mdash; it generates the <strong>right</strong> SQL for your database. Write
+        the
+        same query once, and JQuery adapts it to the SQL dialect of Oracle, PostgreSQL, TeraData, or any other supported
+        SGBD, so you never have to rewrite queries when the underlying database changes.</p>
 
-    <h2>In short</h2>
-    <p>JQuery helps you:</p>
-    <ul>
-      <li>describe database queries using concise operations</li>
-      <li>work with columns directly</li>
-      <li>perform calculations and aggregations</li>
-      <li>filter and transform data</li>
-      <li>work with dates and strings</li>
-      <li>use joins</li>
-      <li>use window functions</li>
-      <li>work with CTEs and subqueries</li>
-      <li>avoid manually constructing complex SQL where JQuery can handle it</li>
-    </ul>
-    <p>The goal is simple:</p>
-    <p class="jq-key big">You say what you want. JQuery handles the query.</p>
+      <p class="jq-key">You say what you want. JQuery handles the query.</p>
 
-    <div class="jq-cta">
-      <div>
-        <h3>See it on real data</h3>
-        <p>Run queries against the demo database and watch JQuery build the SQL.</p>
+      <h2>Important: JQuery is not jQuery</h2>
+      <div class="jq-compare">
+        <div class="no">
+          <h4><a href="https://jquery.com/" target="_blank">jQuery</a></h4>
+          <p>A <strong>JavaScript</strong> library used mainly for web development.</p>
+          <p></p>
+        </div>
+        <div class="yes">
+          <h4><a href="https://mvnrepository.com/artifact/io.github.oneteme/jquery" target="_blank">JQuery</a></h4>
+          <p>A <strong>Java</strong> framework for working with database queries.</p>
+        </div>
       </div>
-      <div class="jq-btn btn-class">Try JQuery</div>
-    </div>
+      <p class="jq-key">The two projects are completely unrelated.</p>
+
+      <h2>The main idea</h2>
+      <p>With JQuery, you describe database operations directly on your columns. Each expression below is a column
+        followed by the operation you want.</p>
+      <div class="jq-ops">
+        <div class="r"><span class="q">price<b>.avg</b></span><span class="d">The average price</span></div>
+        <div class="r"><span class="q">orderDate<b>.year</b></span><span class="d">The year from the order date</span>
+        </div>
+        <div class="r"><span class="q">price<b>.pow</b>(<i>2</i>)</span><span class="d">The price raised to the power of
+            2</span></div>
+      </div>
+      <p>You describe the operation, and JQuery handles the SQL required to perform it.</p>
+
+      <h2>Why JQuery?</h2>
+      <p>SQL can become complicated when a query requires more than a simple <b>SELECT</b>.<br><b>JQuery</b> removes
+        that
+        complexity so you can focus on your application, not on query syntax.</p>
+
+      <div class="jq-grid">
+        <div class="jq-card">
+          <div class="ico outlined"><i class="ti ti-code"></i></div>
+          <h4>Do more with less</h4>
+          <p>Simpler code. Less effort. Same results.</p>
+        </div>
+        <div class="jq-card">
+          <div class="ico"><i class="ti ti-database"></i></div>
+          <h4>Basic SQL. Big results.</h4>
+          <p>Do more with SQL without learning more SQL.</p>
+        </div>
+        <div class="jq-card">
+          <div class="ico"><i class="ti ti-world"></i></div>
+          <h4>One query. All databases.</h4>
+          <p>Switch databases without rewriting your queries.</p>
+        </div>
+        <div class="jq-card">
+          <div class="ico outlined"><i class="ti ti-route"></i></div>
+          <h4>Build once, use everywhere</h4>
+          <p>One setup answers new questions anytime, no extra work.</p>
+        </div>
+        <div class="jq-card">
+          <div class="ico"><i class="devicon-spring-plain colored"></i></div>
+          <h4>Built for Spring Boot</h4>
+          <p>Works with the Spring Boot projects you already have. No new stack, no disruption.</p>
+        </div>
+        <div class="jq-card">
+          <div class="ico"><i class="ti ti-feather"></i></div>
+          <h4>Power without the weight</h4>
+          <p>Add powerful capabilities without adding unnecessary complexity to your project.</p>
+        </div>
+      </div>
+
+      <h2>A library, not an ORM</h2>
+      <p>JQuery is a <strong>library</strong>: it builds and runs the SQL query for you, but it does not map results
+        back into entity objects or manage an object graph the way an ORM does.</p>
+      <div class="jq-compare3">
+        <div class="card lib">
+          <h4><i class="ti ti-puzzle"></i> JQuery &mdash; library</h4>
+          <ul>
+            <li>You describe the query; JQuery builds the SQL</li>
+            <li>Results come back as data, not managed entities</li>
+            <li>No entity mapping, no persistence context to manage</li>
+            <li>Lightweight, adds to your project without replacing it</li>
+          </ul>
+        </div>
+        <div class="card orm">
+          <h4><i class="ti ti-topology-star-3"></i>ORM</h4>
+          <ul>
+            <li>You define entities; the ORM maps rows to objects</li>
+            <li>Manages object identity, relationships, and lazy loading</li>
+            <li>Heavier abstraction, with its own learning curve</li>
+            <li>Built to replace how you access the database</li>
+          </ul>
+        </div>
+      </div>
+      <p>In short: an ORM manages your objects, JQuery gets you the data.</p>
+
+
+      <h2>JQuery as an abstraction layer</h2>
+      <p>JQuery sits between the application and the database.</p>
+      <div class="jq-flow">
+        <div>What you want<small>Your query definition</small></div>
+        <div class="a">→</div>
+        <div class="m">JQuery<small>Builds the query</small></div>
+        <div class="a">→</div>
+        <div>SQL<small>Generated for you</small></div>
+        <div class="a">→</div>
+        <div>Database<small>Runs the query</small></div>
+      </div>
+      <p>The user does not have to manage every SQL detail. JQuery takes the higher-level query definition and builds
+        the
+        database query required to execute it.</p>
+
+      <h2>For developers</h2>
+      <p><strong>JQuery</strong> is useful for Java developers who want to work with database queries without manually
+        constructing large SQL statements. It keeps query definitions concise while still allowing complex database
+        operations.</p>
+      <div class="jq-compare">
+        <div class="no">
+          <h4>Instead of asking</h4>
+          <p>How do I write all the SQL?</p>
+        </div>
+        <div class="yes">
+          <h4>Ask yourself</h4>
+          <p>What data do I need?</p>
+          <p>What should I calculate?</p>
+          <p>How should I filter it?</p>
+          <p>How are the tables related?</p>
+        </div>
+      </div>
+
+      <h2>For non-SQL users</h2>
+      <p>JQuery is also useful when the person defining a query understands the data but does not know SQL.</p>
+      <div class="jq-ask"><small>In plain words</small>Show the average product price.</div>
+      <div class="jq-live" data-example="avg-price">
+        <div class="jq-live-panels">
+          <div class="jq-live-editor">
+            <div class="hd">
+              <span class="tag">JQuery — try it</span>
+            </div>
+            <div class="bd-wrap">
+              <div class="bd" contenteditable="true" spellcheck="false" data-role="query">price<b>.avg</b></div>
+              <button class="jq-run" type="button" aria-label="Run query">
+                <i class="ti ti-player-play"></i>
+              </button>
+            </div>
+          </div>
+          <div class="jq-live-panel sql">
+            <div class="bd" data-role="sql">SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;</div>
+          </div>
+          <div class="jq-live-panel result">
+            <div class="hd">Result</div>
+            <div class="bd" data-role="result">
+              <table class="jq-live-table">
+                <thead>
+                  <tr>
+                    <th>avg</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="jq-live-note">Sample output shown. Edit the query above and press Run to test it live.</div>
+      </div>
+      <div class="jq-live-panel sql">
+        <div class="bd" data-role="sql">SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;</div>
+      </div>
+      <p>Each part of that query is one piece of the request:</p>
+      <div class="jq-ops">
+        <div class="r"><span class="q">name</span><span class="d">Show the product name</span></div>
+        <div class="r"><span class="q">price<b>.gt</b><s>=</s><i>40</i></span><span class="d">Keep only products with a
+            price above 40</span></div>
+        <div class="r"><span class="q">order<s>=</s>price<b>.asc</b></span><span class="d">Sort by price, lowest
+            first</span></div>
+      </div>
+      <p>This makes it possible for applications to build interfaces where users describe or select the data they need
+        without writing SQL.</p>
+
+      <h2>Simple example</h2>
+      <p>Suppose you have a <code>PRODUCTS_TABLE</code> with these columns:</p>
+      <div class="jq-code">
+        <div class="hd">PRODUCTS_TABLE</div>
+        <div class="bd">
+          <div>PRODUCT_ID</div>
+          <div>PRODUCT_NAME</div>
+          <div>CATEGORY_ID</div>
+          <div>UNIT</div>
+          <div>PRICE</div>
+        </div>
+      </div>
+      <div class="jq-ops">
+        <div class="r"><span class="q">name<s>,</s>price</span><span class="d">Retrieve the product name and
+            price</span>
+        </div>
+        <div class="r"><span class="q">price<b>.avg</b></span><span class="d">Calculate the <strong>average</strong>
+            price</span></div>
+        <div class="r"><span class="q">price<b>.gt</b><s>=</s><i>20</i></span><span class="d">Filter by price with
+            <code>.gt</code> (<strong>G</strong>reater<strong>T</strong>han)</span></div>
+      </div>
+      <p>The framework uses these operations to construct the corresponding database query.</p>
+
+      <h2>Query operations</h2>
+      <p>JQuery supports many common database operations.</p>
+
+      <h3>Aggregations</h3>
+      <p>In <strong>SQL</strong> these functions require <code>GROUP BY</code> or <code>HAVING</code>, but
+        <strong>JQuery</strong> does this <strong>automatically</strong>.
+      </p>
+      <div class="jq-ops">
+        <div class="r"><span class="q">price<b>.avg</b></span><span class="d">Average value</span></div>
+        <div class="r"><span class="q">price<b>.count</b></span><span class="d">Number of values</span></div>
+        <div class="r"><span class="q">price<b>.sum</b></span><span class="d">Total of all values</span></div>
+        <div class="r"><span class="q">price<b>.min</b></span><span class="d">Lowest value</span></div>
+        <div class="r"><span class="q">price<b>.max</b></span><span class="d">Highest value</span></div>
+      </div>
+
+      <h3>Mathematical operations</h3>
+      <div class="jq-ops">
+        <div class="r"><span class="q">price<b>.abs</b></span><span class="d">Absolute value</span></div>
+        <div class="r"><span class="q">price<b>.ceil</b></span><span class="d">Round up</span></div>
+        <div class="r"><span class="q">price<b>.floor</b></span><span class="d">Round down</span></div>
+        <div class="r"><span class="q">price<b>.round</b></span><span class="d">Round to the nearest whole number</span>
+        </div>
+        <div class="r"><span class="q">price<b>.sqrt</b></span><span class="d">Square root</span></div>
+        <div class="r"><span class="q">price<b>.pow</b>(<i>2</i>)</span><span class="d">Raise to a power (here,
+            2)</span>
+        </div>
+      </div>
+
+      <h3>Date operations</h3>
+      <div class="jq-ops">
+        <div class="r"><span class="q">orderDate<b>.year</b></span><span class="d">The year of the date</span></div>
+        <div class="r"><span class="q">orderDate<b>.month</b></span><span class="d">The month of the date</span></div>
+        <div class="r"><span class="q">orderDate<b>.day</b></span><span class="d">The day of the date</span></div>
+        <div class="r"><span class="q">orderDate<b>.week</b></span><span class="d">The week of the date</span></div>
+      </div>
+
+      <h3>String operations</h3>
+      <div class="jq-ops">
+        <div class="r"><span class="q">unit<b>.replace</b>(<i>bottles,bags</i>)</span><span class="d">Replace
+            <code>bottles</code> with <code>bags</code> in the unit</span></div>
+        <div class="r"><span class="q">name<b>.ilike</b><s>=</s><i>chai</i></span><span class="d">Case-insensitive match
+            on the name</span></div>
+      </div>
+
+      <h3>Window functions</h3>
+      <p>These operations can require additional SQL structures such as <code>OVER</code>, <code>PARTITION BY</code>, or
+        CTEs. JQuery handles the query structure needed for the operation.</p>
+      <div class="jq-ops">
+        <div class="r"><span class="q">rank</span><span class="d">Position in the ordering; ties share a rank</span>
+        </div>
+        <div class="r"><span class="q">rowNumber</span><span class="d">A unique number for each row</span></div>
+        <div class="r"><span class="q">denseRank</span><span class="d">Like <code>rank</code>, but with no gaps after
+            ties</span></div>
+      </div>
+
+      <h3>Cast functions</h3>
+      <p>Convert a value from one type to another.</p>
+      <div class="jq-ops">
+        <div class="r"><span class="q">price<b>.varchar</b></span><span class="d">Convert to text</span></div>
+        <div class="r"><span class="q">price<b>.integer</b></span><span class="d">Convert to a whole number</span></div>
+        <div class="r"><span class="q">price<b>.bigint</b></span><span class="d">Convert to a large whole number</span>
+        </div>
+        <div class="r"><span class="q">price<b>.decimal</b></span><span class="d">Convert to a decimal number</span>
+        </div>
+        <div class="r"><span class="q">orderDate<b>.timestamp</b></span><span class="d">Convert to a timestamp</span>
+        </div>
+      </div>
+
+      <h2>Joins</h2>
+      <p>JQuery also supports relationships between tables. For example, the demo database contains:</p>
+      <div class="jq-code">
+        <div class="hd">Demo database tables</div>
+        <div class="bd">
+          <div>CUSTOMERS_TABLE</div>
+          <div>ORDERS_TABLE</div>
+          <div>EMPLOYEES_TABLE</div>
+          <div>SHIPPERS_TABLE</div>
+          <div>PRODUCTS_TABLE</div>
+          <div>CATEGORIES_TABLE</div>
+          <div>SUPPLIERS_TABLE</div>
+          <div>ORDERS_DETAILS_TABLE</div>
+        </div>
+      </div>
+      <p>These tables can be connected using joins. JQuery supports common join types such as:</p>
+      <ul>
+        <li><code>INNER JOIN</code></li>
+        <li><code>LEFT JOIN</code></li>
+        <li><code>RIGHT JOIN</code></li>
+        <li><code>SELF JOIN</code></li>
+      </ul>
+      <p>This lets you work with related data without manually constructing the complete SQL join structure.</p>
+
+      <h3>Other functions (Made by JARVIS)</h3>
+      <p>These functions do not exist at all in <strong>SQL</strong>, but you can use them in <strong>JQuery</strong>
+        with
+        any database.</p>
+      <div class="jq-ops">
+        <div class="r"><span class="q">orderDate<b>.semester</b></span><span class="d">The semester of the date</span>
+        </div>
+        <div class="r"><span class="q">orderDate<b>.quarter</b></span><span class="d">The quarter of the date</span>
+        </div>
+        <div class="r"><span class="q">orderDate<b>.yearSemester</b></span><span class="d">Year and semester
+            together</span></div>
+        <div class="r"><span class="q">orderDate<b>.yearQuarter</b></span><span class="d">Year and quarter
+            together</span>
+        </div>
+        <div class="r"><span class="q">orderDate<b>.yearMonth</b></span><span class="d">Year and month together</span>
+        </div>
+        <div class="r"><span class="q">orderDate<b>.monthDay</b></span><span class="d">Month and day together</span>
+        </div>
+        <div class="r"><span class="q">orderDate<b>.yearWeek</b></span><span class="d">Year and week together</span>
+        </div>
+      </div>
+
+      <h2>Complex queries</h2>
+      <p>One of the main benefits of <strong>JQuery</strong> appears when a query becomes complicated. For example, a
+        requirement such as:</p>
+      <div class="jq-ask"><small>In plain words</small>Rank products by price within each category.</div>
+      <p>can involve:</p>
+      <ul>
+        <li>a ranking function</li>
+        <li>a window</li>
+        <li>partitioning</li>
+        <li>ordering</li>
+        <li>potentially additional query structure</li>
+        <li>grouping columns</li>
+      </ul>
+      <p>With <strong>JQuery</strong>, you describe the operation you need, and the framework handles the SQL structure
+        required to execute it. The same applies to aggregations, filtering, joins, CTEs, and subqueries.</p>
+
+      <h2>In short</h2>
+      <p>JQuery helps you:</p>
+      <ul>
+        <li>describe database queries using concise operations</li>
+        <li>work with columns directly</li>
+        <li>perform calculations and aggregations</li>
+        <li>filter and transform data</li>
+        <li>work with dates and strings</li>
+        <li>use joins</li>
+        <li>use window functions</li>
+        <li>work with CTEs and subqueries</li>
+        <li>avoid manually constructing complex SQL where JQuery can handle it</li>
+      </ul>
+      <p>The goal is simple:</p>
+      <p class="jq-key big">You say what you want. JQuery handles the query.</p>
+
+      <div class="jq-cta">
+        <div>
+          <h3>See it on real data</h3>
+          <p>Run queries against the demo database and watch JQuery build the SQL.</p>
+        </div>
+        <div class="jq-btn btn-class">Try JQuery</div>
+      </div>
+    </div> -->
+    <!-- <div class="jq-learn-panel" id="jq-learn-panel" style="display: none;">
+      <div class="jq-learn-inner">
+
+        <div class="jq-learn-left">
+
+          <h2 style="
+    margin: 0;
+">Query operations</h2>
+          <p>JQuery supports many common database operations.</p>
+          <div>
+            <h3>Aggregations</h3>
+            <p>In <strong>SQL</strong> these functions require <code>GROUP BY</code> or <code>HAVING</code>, but
+              <strong>JQuery</strong> does this <strong>automatically</strong>.
+            </p>
+            <div class="jq-ops">
+              <div class="r"><span class="q">price<b>.avg</b></span><span class="d">Average value</span></div>
+              <div class="r"><span class="q">price<b>.count</b></span><span class="d">Number of values</span></div>
+              <div class="r"><span class="q">price<b>.sum</b></span><span class="d">Total of all values</span></div>
+              <div class="r"><span class="q">price<b>.min</b></span><span class="d">Lowest value</span></div>
+              <div class="r"><span class="q">price<b>.max</b></span><span class="d">Highest value</span></div>
+            </div>
+
+            <h3>Mathematical operations</h3>
+            <div class="jq-ops">
+              <div class="r"><span class="q">price<b>.abs</b></span><span class="d">Absolute value</span></div>
+              <div class="r"><span class="q">price<b>.ceil</b></span><span class="d">Round up</span></div>
+              <div class="r"><span class="q">price<b>.floor</b></span><span class="d">Round down</span></div>
+              <div class="r"><span class="q">price<b>.round</b></span><span class="d">Round to the nearest whole
+                  number</span>
+              </div>
+              <div class="r"><span class="q">price<b>.sqrt</b></span><span class="d">Square root</span></div>
+              <div class="r"><span class="q">price<b>.pow</b>(<i>2</i>)</span><span class="d">Raise to a power (here,
+                  2)</span>
+              </div>
+            </div>
+
+            <h3>Date operations</h3>
+            <div class="jq-ops">
+              <div class="r"><span class="q">orderDate<b>.year</b></span><span class="d">The year of the date</span>
+              </div>
+              <div class="r"><span class="q">orderDate<b>.month</b></span><span class="d">The month of the date</span>
+              </div>
+              <div class="r"><span class="q">orderDate<b>.day</b></span><span class="d">The day of the date</span></div>
+              <div class="r"><span class="q">orderDate<b>.week</b></span><span class="d">The week of the date</span>
+              </div>
+            </div>
+
+            <h3>String operations</h3>
+            <div class="jq-ops">
+              <div class="r"><span class="q">unit<b>.replace</b>(<i>bottles,bags</i>)</span><span class="d">Replace
+                  <code>bottles</code> with <code>bags</code> in the unit</span></div>
+              <div class="r"><span class="q">name<b>.ilike</b><s>=</s><i>chai</i></span><span class="d">Case-insensitive
+                  match
+                  on the name</span></div>
+            </div>
+
+            <h3>Window functions</h3>
+            <p>These operations can require additional SQL structures such as <code>OVER</code>,
+              <code>PARTITION BY</code>, or
+              CTEs. JQuery handles the query structure needed for the operation.
+            </p>
+            <div class="jq-ops">
+              <div class="r"><span class="q">rank</span><span class="d">Position in the ordering; ties share a
+                  rank</span>
+              </div>
+              <div class="r"><span class="q">rowNumber</span><span class="d">A unique number for each row</span></div>
+              <div class="r"><span class="q">denseRank</span><span class="d">Like <code>rank</code>, but with no gaps
+                  after
+                  ties</span></div>
+            </div>
+
+            <h3>Cast functions</h3>
+            <p>Convert a value from one type to another.</p>
+            <div class="jq-ops">
+              <div class="r"><span class="q">price<b>.varchar</b></span><span class="d">Convert to text</span></div>
+              <div class="r"><span class="q">price<b>.integer</b></span><span class="d">Convert to a whole number</span>
+              </div>
+              <div class="r"><span class="q">price<b>.bigint</b></span><span class="d">Convert to a large whole
+                  number</span>
+              </div>
+              <div class="r"><span class="q">price<b>.decimal</b></span><span class="d">Convert to a decimal
+                  number</span>
+              </div>
+              <div class="r"><span class="q">orderDate<b>.timestamp</b></span><span class="d">Convert to a
+                  timestamp</span>
+              </div>
+            </div>
+
+            <h2>Joins</h2>
+            <p>JQuery also supports relationships between tables. For example, the demo database contains:</p>
+            <div class="jq-code">
+              <div class="hd">Demo database tables</div>
+              <div class="bd">
+                <div>CUSTOMERS_TABLE</div>
+                <div>ORDERS_TABLE</div>
+                <div>EMPLOYEES_TABLE</div>
+                <div>SHIPPERS_TABLE</div>
+                <div>PRODUCTS_TABLE</div>
+                <div>CATEGORIES_TABLE</div>
+                <div>SUPPLIERS_TABLE</div>
+                <div>ORDERS_DETAILS_TABLE</div>
+              </div>
+            </div>
+            <p>These tables can be connected using joins. JQuery supports common join types such as:</p>
+            <ul>
+              <li><code>INNER JOIN</code></li>
+              <li><code>LEFT JOIN</code></li>
+              <li><code>RIGHT JOIN</code></li>
+              <li><code>SELF JOIN</code></li>
+            </ul>
+            <p>This lets you work with related data without manually constructing the complete SQL join structure.</p>
+
+            <h3>Other functions (Made by JARVIS)</h3>
+            <p>These functions do not exist at all in <strong>SQL</strong>, but you can use them in
+              <strong>JQuery</strong>
+              with
+              any database.
+            </p>
+            <div class="jq-ops">
+              <div class="r"><span class="q">orderDate<b>.semester</b></span><span class="d">The semester of the
+                  date</span>
+              </div>
+              <div class="r"><span class="q">orderDate<b>.quarter</b></span><span class="d">The quarter of the
+                  date</span>
+              </div>
+              <div class="r"><span class="q">orderDate<b>.yearSemester</b></span><span class="d">Year and semester
+                  together</span></div>
+              <div class="r"><span class="q">orderDate<b>.yearQuarter</b></span><span class="d">Year and quarter
+                  together</span>
+              </div>
+              <div class="r"><span class="q">orderDate<b>.yearMonth</b></span><span class="d">Year and month
+                  together</span>
+              </div>
+              <div class="r"><span class="q">orderDate<b>.monthDay</b></span><span class="d">Month and day
+                  together</span>
+              </div>
+              <div class="r"><span class="q">orderDate<b>.yearWeek</b></span><span class="d">Year and week
+                  together</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="jq-cta">
+            <div>
+              <h3>See it on real data</h3>
+              <p>Run queries against the demo database and watch JQuery build the SQL.</p>
+            </div>
+            <div class="jq-btn btn-class">Try JQuery</div>
+          </div>
+        </div>
+
+        <div class="jq-learn-right">
+          <div class="jq-live-editor">
+            <div class="hd"><span class="tag">JQuery — try it</span></div>
+            <div class="bd-wrap">
+              <div class="bd" contenteditable="true" spellcheck="false" id="jq-live-query">price<b>.avg</b></div>
+              <button class="jq-run" type="button" id="jq-live-run" aria-label="Run query">
+                <i class="ti ti-player-play"></i>
+              </button>
+            </div>
+          </div>
+          <div class="jq-live-panel sql">
+            <div class="bd" id="jq-live-sql">
+              SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;
+              SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;
+              SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;
+              SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;
+              SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;
+              SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;
+              SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;
+              SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;
+              SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;
+              SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;
+              SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;
+              SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;
+              SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;
+              SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;
+            </div>
+          </div>
+          <div class="jq-live-panel result">
+            <div class="hd">Result</div>
+            <div class="bd" id="jq-live-result">
+              <table class="jq-live-table">
+                <thead>
+                  <tr>
+                    <th>avg</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div> -->
+    <!-- <div class="jq-learn-panel" id="jq-learn-panel">
+      <div class="jq-learn-inner">
+
+        <div class="jq-learn-left">
+
+          <div class="jq-cat">
+            <h3><i class="ti ti-sigma"></i> Aggregations</h3>
+            <div class="jq-ops-live">
+              <div class="r" data-query="price.avg" data-sql="SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">price<b>.avg</b></span>
+                <span class="d">Average value</span>
+              </div>
+              <div class="r" data-query="price.count" data-sql="SELECT COUNT(price) AS count FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">price<b>.count</b></span>
+                <span class="d">Number of values</span>
+              </div>
+              <div class="r" data-query="price.sum" data-sql="SELECT SUM(price) AS sum FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">price<b>.sum</b></span>
+                <span class="d">Total of all values</span>
+              </div>
+              <div class="r" data-query="price.min" data-sql="SELECT MIN(price) AS min FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">price<b>.min</b></span>
+                <span class="d">Lowest value</span>
+              </div>
+              <div class="r" data-query="price.max" data-sql="SELECT MAX(price) AS max FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">price<b>.max</b></span>
+                <span class="d">Highest value</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="jq-cat">
+            <h3><i class="ti ti-math-function"></i> Mathematical operations</h3>
+            <div class="jq-ops-live">
+              <div class="r" data-query="price.abs" data-sql="SELECT ABS(price) AS abs FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">price<b>.abs</b></span>
+                <span class="d">Absolute value</span>
+              </div>
+              <div class="r" data-query="price.ceil" data-sql="SELECT CEIL(price) AS ceil FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">price<b>.ceil</b></span>
+                <span class="d">Round up</span>
+              </div>
+              <div class="r" data-query="price.floor" data-sql="SELECT FLOOR(price) AS floor FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">price<b>.floor</b></span>
+                <span class="d">Round down</span>
+              </div>
+              <div class="r" data-query="price.round" data-sql="SELECT ROUND(price) AS round FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">price<b>.round</b></span>
+                <span class="d">Round to the nearest whole number</span>
+              </div>
+              <div class="r" data-query="price.sqrt" data-sql="SELECT SQRT(price) AS sqrt FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">price<b>.sqrt</b></span>
+                <span class="d">Square root</span>
+              </div>
+              <div class="r" data-query="price.pow(2)" data-sql="SELECT POWER(price, 2) AS pow FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">price<b>.pow</b>(<i>2</i>)</span>
+                <span class="d">Raise to a power (here, 2)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="jq-cat">
+            <h3><i class="ti ti-calendar"></i> Date operations</h3>
+            <div class="jq-ops-live">
+              <div class="r" data-query="orderDate.year"
+                data-sql="SELECT EXTRACT(YEAR FROM orderDate) AS year FROM ORDERS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">orderDate<b>.year</b></span>
+                <span class="d">The year of the date</span>
+              </div>
+              <div class="r" data-query="orderDate.month"
+                data-sql="SELECT EXTRACT(MONTH FROM orderDate) AS month FROM ORDERS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">orderDate<b>.month</b></span>
+                <span class="d">The month of the date</span>
+              </div>
+              <div class="r" data-query="orderDate.day"
+                data-sql="SELECT EXTRACT(DAY FROM orderDate) AS day FROM ORDERS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">orderDate<b>.day</b></span>
+                <span class="d">The day of the date</span>
+              </div>
+              <div class="r" data-query="orderDate.week"
+                data-sql="SELECT EXTRACT(WEEK FROM orderDate) AS week FROM ORDERS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">orderDate<b>.week</b></span>
+                <span class="d">The week of the date</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="jq-cat">
+            <h3><i class="ti ti-letter-case"></i> String operations</h3>
+            <div class="jq-ops-live">
+              <div class="r" data-query="unit.replace(bottles,bags)"
+                data-sql="SELECT REPLACE(unit, 'bottles', 'bags') AS unit FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">unit<b>.replace</b>(<i>bottles,bags</i>)</span>
+                <span class="d">Replace <code>bottles</code> with <code>bags</code></span>
+              </div>
+              <div class="r" data-query="name.ilike=chai"
+                data-sql="SELECT * FROM PRODUCTS_TABLE WHERE name ILIKE '%chai%';">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">name<b>.ilike</b><s>=</s><i>chai</i></span>
+                <span class="d">Case-insensitive match on the name</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="jq-cat">
+            <h3><i class="ti ti-stack-3"></i> Window functions</h3>
+            <div class="jq-ops-live">
+              <div class="r" data-query="rank"
+                data-sql="SELECT *, RANK() OVER (ORDER BY price) AS rank FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">rank</span>
+                <span class="d">Position in the ordering; ties share a rank</span>
+              </div>
+              <div class="r" data-query="rowNumber"
+                data-sql="SELECT *, ROW_NUMBER() OVER (ORDER BY price) AS row_number FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">rowNumber</span>
+                <span class="d">A unique number for each row</span>
+              </div>
+              <div class="r" data-query="denseRank"
+                data-sql="SELECT *, DENSE_RANK() OVER (ORDER BY price) AS dense_rank FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">denseRank</span>
+                <span class="d">Like rank, but with no gaps after ties</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="jq-cat">
+            <h3><i class="ti ti-transform"></i> Cast functions</h3>
+            <div class="jq-ops-live">
+              <div class="r" data-query="price.varchar"
+                data-sql="SELECT CAST(price AS VARCHAR) AS price FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">price<b>.varchar</b></span>
+                <span class="d">Convert to text</span>
+              </div>
+              <div class="r" data-query="price.integer"
+                data-sql="SELECT CAST(price AS INTEGER) AS price FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">price<b>.integer</b></span>
+                <span class="d">Convert to a whole number</span>
+              </div>
+              <div class="r" data-query="price.bigint"
+                data-sql="SELECT CAST(price AS BIGINT) AS price FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">price<b>.bigint</b></span>
+                <span class="d">Convert to a large whole number</span>
+              </div>
+              <div class="r" data-query="price.decimal"
+                data-sql="SELECT CAST(price AS DECIMAL) AS price FROM PRODUCTS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">price<b>.decimal</b></span>
+                <span class="d">Convert to a decimal number</span>
+              </div>
+              <div class="r" data-query="orderDate.timestamp"
+                data-sql="SELECT CAST(orderDate AS TIMESTAMP) AS orderDate FROM ORDERS_TABLE;">
+                <button class="run-mini" type="button" aria-label="Run"><i class="ti ti-player-play"></i></button>
+                <span class="q">orderDate<b>.timestamp</b></span>
+                <span class="d">Convert to a timestamp</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="jq-learn-right">
+          <div class="jq-live-editor">
+            <div class="hd"><span class="tag">JQuery — try it</span></div>
+            <div class="bd-wrap">
+              <div class="bd" contenteditable="true" spellcheck="false" id="jq-live-query">price<b>.avg</b></div>
+              <button class="jq-run" type="button" id="jq-live-run" aria-label="Run query">
+                <i class="ti ti-player-play"></i>
+              </button>
+            </div>
+          </div>
+          <div class="jq-live-panel sql">
+            <div class="bd" id="jq-live-sql">SELECT AVG(price) AS avg FROM PRODUCTS_TABLE;</div>
+          </div>
+          <div class="jq-live-panel result">
+            <div class="hd">Result</div>
+            <div class="bd" id="jq-live-result">
+              <table class="jq-live-table">
+                <thead>
+                  <tr>
+                    <th>avg</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>28.87</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div> -->
   </div>
+
 </body>
 
 </html>

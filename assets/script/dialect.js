@@ -38,7 +38,7 @@ export function loadDialects() {
             const $option = $("<div>", { class: "db-option", "data-value": value.value, "data-label": value.label })
                 .append(div, $label)
 
-            $("#db-select-popup").append($option)
+            // $("#db-select-popup").append($option)
 
             const check = fetch(constants.demoServer + "/db/" + value.value + "/customers")
                 .then(response => {
@@ -46,7 +46,7 @@ export function loadDialects() {
                         throw new Error("Server responded with an error")
                     }
                     $("#db-select-popup").prepend($option.attr("connected", true))
-                    return { value: value.value, connected: true }
+                    return Promise.resolve({ value: value.value, connected: true })
                 })
                 .catch(() => {
                     $("#db-select-popup").append($option)
@@ -55,7 +55,7 @@ export function loadDialects() {
                         content: `Could not connect to ${value.label} server`,
                         placement: 'left',
                     })
-                    return { value: value.value, connected: false }
+                    return Promise.resolve({ value: value.value, connected: false })
                 })
 
             connectionChecks.push(check)

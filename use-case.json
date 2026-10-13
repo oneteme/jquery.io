@@ -1,0 +1,47 @@
+[
+    {
+        "label": "Afficher le nom et pays de tous les clients",
+        "value": "/customers?select=name,country",
+        "sql":"SELECT v1.CUSTOMER_NAME AS \"name\", v1.COUNTRY AS \"country\" FROM CUSTOMERS_TABLE v1"
+    },
+    {
+        "label": "Afficher le nom et la region de tous les clients qui sont d'origine Française",
+        "value": "/customers?select=name,city&country=France",
+        "sql":"SELECT v1.CUSTOMER_NAME AS \"name\", v1.CITY AS \"city\" FROM CUSTOMERS_TABLE v1 WHERE v1.COUNTRY='France'"
+    },
+    {
+        "label": "Afficher le nombre de clients par pays",
+        "value": "/customers?select=count,country",
+        "sql":"SELECT COUNT(v1.*), v1.COUNTRY AS \"country\" FROM CUSTOMERS_TABLE v1 GROUP BY \"country\""
+    },
+    {
+        "label": "Afficher les pays avec plus de 10 clients",
+        "value": "/customers?select=count,country&count.gt(10) // gt=>Greater Than",
+        "sql":"SELECT COUNT(v1.*), v1.COUNTRY AS \"country\" FROM CUSTOMERS_TABLE v1 GROUP BY \"country\" HAVING COUNT(v1.*)>10"
+    },
+    {
+        "label": "Afficher le noms et le prix de tous les produits",
+        "value": "select=name,price",
+        "sql":"SELECT v1.PRODUCT_NAME AS \"name\", v1.PRICE AS \"price\" FROM PRODUCTS_TABLE v1"
+    },
+    {
+        "label": "Afficher les produits avec un ordre croissant par prix",
+        "value": "select=name,price&order=price.asc",
+        "sql":"SELECT v1.PRODUCT_NAME AS \"name\", v1.PRICE AS \"price\" FROM PRODUCTS_TABLE v1 ORDER BY v1.PRICE ASC"
+    },
+    {
+        "label": "Appliquer une promotion de -25% sur les produits avec les catégories #1,#2 et #3",
+        "value": "/products?select=price.minus(price.multiply(25).divide(100))&cat_id=1,2,3",
+        "sql":"SELECT (v1.PRICE-((v1.PRICE*25)/100)) AS \"prix_promo\" FROM PRODUCTS_TABLE v1 WHERE v1.CATEGORY_ID IN(1, 2, 3)"
+    },
+    {
+        "label": "Afficher un classement des produits avec la catégorie #1",
+        "value": "select=price,name,rankProducts:rank&cat_id=1&order=rank.asc",
+        "sql":"SELECT v1.PRICE AS \"price\", v1.PRODUCT_NAME AS \"name\", RANK() OVER(PARTITION BY v1.CATEGORY_ID ORDER BY v1.PRICE DESC) AS \"rank\" FROM PRODUCTS_TABLE v1 WHERE v1.CATEGORY_ID=1 ORDER BY \"rank\" ASC"
+    },
+    {
+        "label": "Afficher le produit Top #1 pour chaque catégorie",
+        "value": "select=price,name,rankProducts:rank&rank=1",
+        "sql":"WITH g1 AS (SELECT *, RANK() OVER(PARTITION BY s_v1.CATEGORY_ID ORDER BY s_v1.PRICE DESC) AS \"OVER_864838729\" FROM PRODUCTS_TABLE s_v1) SELECT g1.PRICE AS \"price\", g1.PRODUCT_NAME AS \"name\", g1.\"OVER_864838729\" AS \"rank\" FROM g1 WHERE g1.\"OVER_864838729\"=1"
+    }
+]

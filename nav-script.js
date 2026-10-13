@@ -14,6 +14,12 @@ readDirectory(mdPath)
         console.error(err);
     });
 
+function preLoadNavbar() {
+    readNavbarJSON().then(html => {
+        return fs.writeFile(outputPath, html, "utf8");
+    })
+}
+
 function readNavbarJSON(path = "./menu.json", parentTitle = null) {
     return fs.readFile(path, "utf8")
         .then(content => JSON.parse(content))
@@ -138,6 +144,6 @@ function createSubNavItem(navItem, next, prev, parentTitle = null) {
     return `<li ${attributes}>${navItem.title}</li>\n`;
 }
 
-readNavbarJSON().then(html => {
-    return fs.writeFile(outputPath, html, "utf8");
-})
+
+module.exports = { preLoadNavbar };
+

@@ -1,4 +1,4 @@
-import { introNextStep, introNextStepCondition, isIntro } from "./intro-jq.js";
+import { introNextStep, introNextStepIf, isIntro } from "./help-jq.js";
 import { hideNavBar, showNavBar, toggleNavBar } from "./navbar.js";
 import { loadSettings } from "./settings.js";
 import { hideLoading, showError, showLoading, showSuccess } from "./status.js";
@@ -8,6 +8,7 @@ import * as utils from "./utils.js";
 import { initCodeBlocks } from "./code-blocks.js";
 import * as constants from "./constants.js";
 import { callServer } from "./server.js"
+import { setupIntroList } from "./intro-jq.js";
 
 var inputTimeOut;
 
@@ -15,6 +16,7 @@ var inputTimeOut;
 jQuery(function () {
   hljs.highlightAll();
   $(".navbar-nav").empty();
+  setupIntroList();
   dialect.loadDialects();
   initCodeBlocks();
   $(".navbar-nav").load("./navbar.html", function () {
@@ -73,7 +75,7 @@ jQuery(function () {
     $("#jq-filters").val("");
 
     fetchJQData();
-    introNextStepCondition($("#jq-table").val() === "customers");
+    introNextStepIf($("#jq-table").val() === "customers");
   });
 
   $("#jq-show-examples").on("click", (e) => {
@@ -102,13 +104,13 @@ jQuery(function () {
   $("#jq-columns").on("input", (e) => {
     clearTimeout(inputTimeOut);
     inputTimeOut = setTimeout(() => {
-      introNextStepCondition($(e.currentTarget).val() === "country,name,contact,id", 0)
+      introNextStepIf($(e.currentTarget).val() === "country,name,contact,id", 0)
     }, 800);
   });
   $("#jq-filters").on("input", (e) => {
     clearTimeout(inputTimeOut);
     inputTimeOut = setTimeout(() => {
-      introNextStepCondition($(e.currentTarget).val() === "country=France", 0)
+      introNextStepIf($(e.currentTarget).val() === "country=France", 0)
     }, 800);
   });
   $(".jqsyntax-container input").on("blur", (e) => {

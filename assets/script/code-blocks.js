@@ -30,7 +30,7 @@ export function initCodeBlocks(root = null) {
     }
 
     // Step 2: wrap every code block with a header
-    $root.find('pre > code[class*="language-"]').each(function () {
+    $root.find('.page-container pre > code[class*="language-"]').each(function () {
         const $code = $(this);
         const $pre = $code.parent();
         if ($pre.parent().hasClass('code-block-wrapper')) return;
