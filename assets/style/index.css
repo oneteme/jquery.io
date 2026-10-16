@@ -675,427 +675,74 @@ header {
 }
 
 /* Why JQuery — icon card grid */
-.jq3-rows {
-  display: flex;
-  flex-direction: column;
-  gap: 3.5rem;
-  margin: 1.5rem 0
-}
-
-.jq3-row {
-  display: grid;
-  grid-template-columns: 1fr 1.25fr;
-  gap: 2.5rem;
-  align-items: center
-}
-
-.jq3-row--rev .jq3-text {
-  order: 2
-}
-
-.jq3-text,
-.jq3-visual {
-  min-width: 0
-}
-
-/* Colonne texte */
-.jq3-ico {
-  width: 3rem;
-  height: 3rem;
-  display: grid;
-  place-items: center;
-  border-radius: 12px;
-  font-size: 1.4rem;
-  color: #2b8ed6;
-  background: color-mix(in srgb, #2b8ed6 12%, transparent);
-  margin-bottom: .9rem
-}
-
-.jq3-text h3 {
-  margin: 0 0 .5rem;
-  font-size: 1.35rem
-}
-
-.jq3-text p {
-  margin: .4rem 0
-}
-
-.jq3-text strong {
-  color: #c2410c
-}
-
-/* Visuel : bloc /customers */
-.jq3-api {
-  border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
-  border-radius: 14px;
-  padding: 1rem;
-  background: color-mix(in srgb, currentColor 3%, transparent)
-}
-
-.jq3-api-head {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: .6rem;
-  margin-bottom: .9rem;
-  font-weight: 600
-}
-
-.jq3-api-head i {
-  color: #2b8ed6;
-  font-size: 1.2rem
-}
-
-.jq3-api-head code {
-  padding: .15rem .55rem;
-  border-radius: 6px;
-  background: #111827;
-  color: #7dd3fc
-}
-
-.jq3-api-head span {
-  margin-left: auto;
-  font-size: .8rem;
-  font-weight: 500;
-  opacity: .65
-}
-
-.jq3-queries {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: .7rem
-}
-
-.jq3-queries li {
-  display: flex;
-  flex-direction: column;
-  gap: .35rem
-}
-
-.jq3-queries li code {
-  display: block;
-  padding: .55rem .8rem;
-  border-radius: 8px;
-  background: #111827;
-  color: #e5e7eb;
-  font-size: .85rem;
-  overflow-x: auto;
-  white-space: nowrap
-}
-
-.jq3-queries li span {
-  font-size: .9rem;
-  padding-left: .3rem
-}
-
-.jq3-queries li span::before {
-  content: "\21B3\00a0";
-  color: #2b8ed6
-}
-
-/* Visuel : graphe jq-flow réutilisé, en colonne dans la moitié de page */
-.jq3-visual .jq-flow {
-  flex-direction: column;
-  align-items: stretch;
-  gap: .4rem
-}
-
-.jq3-visual .jq-flow .a {
-  align-self: center;
-  transform: rotate(90deg)
-}
-
-.jq3-caption {
-  margin: .8rem 0 0;
-  font-size: .9rem;
-  opacity: .75;
-  text-align: center
-}
-
-/* Étape JQuery avec détection du dialecte */
-.jq3-sub {
-  list-style: none;
-  counter-reset: s;
-  margin: .5rem 0 0;
-  padding: 0;
-  font-size: .85rem;
-  font-weight: 500;
-  text-align: center
-}
-
-.jq3-sub li {
-  counter-increment: s
-}
-
-.jq3-sub li::before {
-  content: counter(s) ". ";
-  opacity: .8
-}
-
-.jq3-chips {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: .35rem;
-  margin-top: .6rem
-}
-
-.jq3-chips b {
-  padding: .1rem .55rem;
-  border-radius: 999px;
-  font-size: .72rem;
-  font-weight: 600;
-  background: rgba(255, 255, 255, .22)
-}
-
-/* Animation au scroll (active seulement si le JS est chargé) */
-.jq3-js .jq3-text,
-.jq3-js .jq3-visual {
-  opacity: 0;
-  transition: opacity .6s ease, transform .6s ease
-}
-
-.jq3-js .jq3-text {
-  transform: translateX(-28px)
-}
-
-.jq3-js .jq3-visual {
-  transform: translateX(28px);
-  transition-delay: .15s
-}
-
-.jq3-js .jq3-row--rev .jq3-text {
-  transform: translateX(28px)
-}
-
-.jq3-js .jq3-row--rev .jq3-visual {
-  transform: translateX(-28px)
-}
-
-.jq3-js .jq3-row.is-visible .jq3-text,
-.jq3-js .jq3-row.is-visible .jq3-visual {
-  opacity: 1;
-  transform: none
-}
-
-/* Apparition séquentielle des éléments du visuel */
-.jq3-js .jq3-stagger>* {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity .45s ease, transform .45s ease
-}
-
-.jq3-js .is-visible .jq3-stagger>* {
-  opacity: 1;
-  transform: none
-}
-
-.jq3-stagger>:nth-child(1) {
-  transition-delay: .35s !important
-}
-
-.jq3-stagger>:nth-child(2) {
-  transition-delay: .5s !important
-}
-
-.jq3-stagger>:nth-child(3) {
-  transition-delay: .65s !important
-}
-
-.jq3-stagger>:nth-child(4) {
-  transition-delay: .8s !important
-}
-
-.jq3-stagger>:nth-child(5) {
-  transition-delay: .95s !important
-}
-
-.jq3-stagger>:nth-child(6) {
-  transition-delay: 1.1s !important
-}
-
-.jq3-stagger>:nth-child(7) {
-  transition-delay: 1.25s !important
-}
-
-@media(max-width:860px) {
-  .jq3-row {
-    grid-template-columns: 1fr;
-    gap: 1.25rem
+ /* ----- Cartes d'origine, une par ligne : texte à gauche, présentation à droite ----- */
+  .jq-grid.jq4-list{display:grid!important;grid-template-columns:1fr!important;gap:1.25rem}
+  .jq-grid.jq4-list .jq-card{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)!important;grid-template-rows:auto auto auto 1fr;
+    column-gap:2.5rem;row-gap:0;align-items:start;width:auto;max-width:none}
+  .jq-grid.jq4-list .jq-card>*{grid-column:1}
+  .jq-grid.jq4-list .jq-card>.jq4-vis{grid-column:2!important;grid-row:1 / span 4;align-self:center}
+ 
+  .jq4-vis{min-width:0;box-sizing:border-box}
+  .jq4-vis *{box-sizing:border-box}
+ 
+  /* ----- 1. Une seule API, trois demandes ----- */
+  .jq4-term{border-radius:12px;overflow:hidden;background:#111827;color:#e5e7eb}
+  .jq4-term-head{display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:.65rem .9rem;
+    border-bottom:1px solid rgba(255,255,255,.1);font-size:.8rem;color:#94a3b8}
+  .jq4-term-tag{padding:.12rem .6rem;border-radius:6px;background:#12b5a6;color:#fff;font-size:.72rem;font-weight:700}
+  .jq4-req{padding:.7rem .9rem;border-bottom:1px solid rgba(255,255,255,.07)}
+  .jq4-q{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;line-height:1.4;word-break:break-all}
+  .jq4-q-base{color:#94a3b8}
+  .jq4-q-var{color:#7dd3fc}
+  .jq4-d{margin-top:.25rem;font-size:.85rem;line-height:1.4;color:#cbd5e1}
+  .jq4-d::before{content:"\2192\00a0";color:#12b5a6;font-weight:700}
+  .jq4-term-foot{padding:.6rem .9rem;font-size:.78rem;color:#94a3b8}
+ 
+  /* ----- 2 et 3. Étapes ----- */
+  .jq4-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));position:relative}
+  .jq4-steps::before{content:"";position:absolute;top:1.75rem;left:12.5%;right:12.5%;height:2px;border-radius:2px;
+    background:linear-gradient(90deg,#2b8ed6,#12b5a6)}
+  .jq4-step{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 .3rem}
+  .jq4-node{width:3.5rem;height:3.5rem;display:grid;place-items:center;border-radius:50%;font-size:1.5rem;line-height:1;
+    background:#fff;background:Canvas;color:#2b8ed6;border:2px solid #9ccbee}
+  .jq4-step.is-main .jq4-node{width:4.25rem;height:4.25rem;margin-top:-.375rem;font-size:1.8rem;color:#fff;
+    background:#2b8ed6;border-color:#2b8ed6;box-shadow:0 0 0 6px rgba(43,142,214,.18)}
+  .jq4-lbl{display:block;margin-top:.7rem;font-size:.88rem;font-weight:600;line-height:1.25;color:inherit}
+  .jq4-sub{display:block;margin-top:.2rem;font-size:.76rem;line-height:1.3;opacity:.7;color:inherit}
+  .jq4-step.is-main .jq4-lbl{margin-top:.325rem}
+  .jq4-cap{margin-top:1rem;font-size:.85rem;text-align:center;opacity:.75}
+ 
+  /* Accolade « JQuery » au-dessus des étapes 2 et 3 */
+  .jq4-brace{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:.9rem}
+  .jq4-brace span{grid-column:2 / 4;position:relative;margin:0 1.4rem;padding-bottom:.4rem;text-align:center;
+    font-size:.8rem;font-weight:700;letter-spacing:.04em;color:#2b8ed6;border-bottom:2px solid #2b8ed6}
+  .jq4-brace span::before,.jq4-brace span::after{content:"";position:absolute;bottom:-2px;width:2px;height:.5rem;background:#2b8ed6}
+  .jq4-brace span::before{left:0}
+  .jq4-brace span::after{right:0}
+ 
+  /* Dialectes */
+  .jq4-dialects{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem;margin-top:1.2rem}
+  .jq4-dl{font-size:.82rem;opacity:.75}
+  .jq4-chip{display:inline-flex;align-items:center;gap:.4rem;padding:.2rem .75rem;border-radius:999px;font-size:.8rem;font-weight:600;
+    color:#2b8ed6;background:rgba(43,142,214,.1)}
+  .jq4-chip i{font-size:1rem}
+ 
+  /* ----- Responsive ----- */
+  @media(max-width:860px){
+    .jq-grid.jq4-list .jq-card{grid-template-columns:1fr!important;grid-template-rows:none}
+    .jq-grid.jq4-list .jq-card>.jq4-vis{grid-column:1!important;grid-row:auto;margin-top:1.2rem}
   }
-
-  .jq3-row--rev .jq3-text {
-    order: 0
-  }
-
-  .jq3-js .jq3-text,
-  .jq3-js .jq3-visual,
-  .jq3-js .jq3-row--rev .jq3-text,
-  .jq3-js .jq3-row--rev .jq3-visual {
-    transform: translateY(24px)
-  }
-}
-
-@media(prefers-reduced-motion:reduce) {
-
-  .jq3-js .jq3-text,
-  .jq3-js .jq3-visual,
-  .jq3-js .jq3-stagger>* {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important
-  }
-}
-
-.jq3-steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  position: relative
-}
-
-/* Ligne de liaison : fond + progression animée */
-.jq3-steps::before,
-.jq3-steps::after {
-  content: "";
-  position: absolute;
-  top: 1.75rem;
-  left: 12.5%;
-  height: 2px;
-  border-radius: 2px
-}
-
-.jq3-steps::before {
-  right: 12.5%;
-  background: color-mix(in srgb, currentColor 15%, transparent)
-}
-
-.jq3-steps::after {
-  width: 75%;
-  background: linear-gradient(90deg, #2b8ed6, #12b5a6)
-}
-
-.jq3-js .jq3-steps::after {
-  width: 0;
-  transition: width 1.2s ease .5s
-}
-
-.jq3-js .is-visible .jq3-steps::after {
-  width: 75%
-}
-
-.jq3-steps li {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 0 .3rem
-}
-
-/* Cercles */
-.jq3-node {
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: 1.5rem;
-  background: #fff;
-  background: Canvas;
-  color: #2b8ed6;
-  border: 2px solid color-mix(in srgb, #2b8ed6 35%, transparent)
-}
-
-.jq3-steps .is-main .jq3-node {
-  width: 4.25rem;
-  height: 4.25rem;
-  margin-top: -.375rem;
-  font-size: 1.8rem;
-  color: #fff;
-  background: #2b8ed6;
-  border-color: #2b8ed6;
-  box-shadow: 0 0 0 6px rgba(43, 142, 214, .18)
-}
-
-/* Libellés */
-.jq3-steps strong {
-  display: block;
-  margin-top: .7rem;
-  font-size: .9rem;
-  line-height: 1.25
-}
-
-.jq3-steps small {
-  display: block;
-  margin-top: .2rem;
-  font-size: .78rem;
-  line-height: 1.3;
-  opacity: .7
-}
-
-.jq3-steps .is-main strong {
-  margin-top: .325rem
-}
-
-/* Bandeau des dialectes */
-.jq3-dialects {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: .5rem;
-  margin-top: 1.6rem;
-  padding: .8rem 1rem;
-  border: 1px dashed color-mix(in srgb, #2b8ed6 55%, transparent);
-  border-radius: 12px;
-  background: color-mix(in srgb, #2b8ed6 5%, transparent)
-}
-
-.jq3-dialects-label {
-  display: inline-flex;
-  align-items: center;
-  gap: .4rem;
-  margin-right: .3rem;
-  font-size: .85rem;
-  font-weight: 600
-}
-
-.jq3-dialects-label i {
-  color: #2b8ed6
-}
-
-.jq3-chip {
-  padding: .15rem .7rem;
-  border-radius: 999px;
-  font-size: .8rem;
-  font-weight: 600;
-  color: #2b8ed6;
-  background: color-mix(in srgb, #2b8ed6 12%, transparent)
-}
-
-@media(max-width:520px) {
-  .jq3-steps strong {
-    font-size: .8rem
-  }
-
-  .jq3-steps small {
-    font-size: .7rem
-  }
-}
-
-@media(prefers-reduced-motion:reduce) {
-  .jq3-js .jq3-steps::after {
-    width: 75% !important;
-    transition: none !important
-  }
-}
-
+  @media(max-width:520px){.jq4-lbl{font-size:.78rem}.jq4-sub{font-size:.68rem}}
+  /* Variante « étape surélevée » */
+  .jq4-steps--lift{padding-top:2rem}
+  .jq4-steps--lift::before{display:none}                 /* l'ancienne ligne droite est remplacée par le SVG */
+  .jq4-lift-line{position:absolute;left:0;top:0;width:100%;height:4.5rem;z-index:0;overflow:visible;pointer-events:none}
+  .jq4-step.is-lift{transform:translateY(-2rem)}
+ 
+  /* Étape de détection : couleur distincte (indigo) */
+  .jq4-step.is-detect .jq4-node{background:linear-gradient(135deg,#7a68ee,#4f46e5);border-color:#5b4fe0;
+    box-shadow:0 0 0 6px rgba(99,86,230,.2),0 8px 18px rgba(79,70,229,.28)}
+  .jq4-step.is-detect .jq4-lbl{color:#4f46e5}
 /* Optionnel : retire la barre bleue que votre site ajoute aux <h3> dans cette section */
 /* .jq3-text h3{border-left:0;padding-left:0} */
 

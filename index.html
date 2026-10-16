@@ -417,109 +417,157 @@ HAVING
       <h2>Les points forts de JQuery</h2>
 
 
-      <div class="jq3-rows">
+      <div class="jq-grid jq4-list">
 
-        <!-- ===== 1. Gain de temps (texte à gauche, visuel à droite) ===== -->
-        <article class="jq3-row">
-          <div class="jq3-text">
-            <div class="jq3-ico"><i class="ti ti-clock"></i></div>
-            <h3>Gain de temps</h3>
-            <p>
-              Une même API peut répondre à différents besoins : sélectionner, filtrer, trier ou transformer
-              les données selon la demande.
-            </p>
-            <p><strong>Moins de développements, plus de temps pour répondre aux besoins.</strong></p>
-          </div>
+        <!-- ===== Gain de temps ===== -->
+        <div class="jq-card">
+          <div class="ico"><i class="ti ti-clock"></i></div>
+          <h4>Gain de temps</h4>
+          <p>
+            Une même API peut répondre à différents besoins : sélectionner, filtrer, trier ou transformer
+            les données selon la demande.
+          </p>
+          <p><strong>Moins de développements, plus de temps pour répondre aux besoins.</strong></p>
 
-          <div class="jq3-visual">
-            <div class="jq3-api">
-              <div class="jq3-api-head">
-                <i class="ti ti-api"></i>
-                <code>/customers</code>
-                <span>Une seule API, trois demandes</span>
+          <div class="jq4-vis">
+            <div class="jq4-term">
+              <div class="jq4-term-head">
+                <span class="jq4-term-tag">Une seule API</span>
+                <span class="jq4-term-ep">3 demandes différentes</span>
               </div>
-              <ul class="jq3-queries jq3-stagger">
-                <li>
-                  <code>/customers?select=name,country</code>
-                  <span>Afficher le nom et le pays de tous les clients</span>
-                </li>
-                <li>
-                  <code>/customers?select=name,city&amp;country=France</code>
-                  <span>Afficher le nom et la ville des clients d'origine française</span>
-                </li>
-                <li>
-                  <code>/customers?select=count,country</code>
-                  <span>Afficher le nombre de clients par pays</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </article>
 
-
-        <!-- ===== 2. Accessibilité (inversé : visuel à gauche) ===== -->
-        <article class="jq3-row jq3-row--rev">
-          <div class="jq3-text">
-            <div class="jq3-ico"><i class="ti ti-accessible"></i></div>
-            <h3>Accessibilité</h3>
-            <p>
-              Comprendre les principales notions liées à la manipulation des données suffit pour accéder
-              simplement aux données recherchées.
-            </p>
-            <p>La complexité nécessaire pour les obtenir est ensuite prise en charge par JQuery.</p>
-          </div>
-
-          <div class="jq3-visual">
-            <!-- Graphe existant, réutilisé tel quel -->
-            <div class="jq-flow jq3-stagger">
-              <div>Ce que vous voulez<small>Votre besoin</small></div>
-              <div class="a">→</div>
-              <div class="m">JQuery<small>Construit la requête</small></div>
-              <div class="a">→</div>
-              <div>Requête<small>Générée pour vous</small></div>
-              <div class="a">→</div>
-              <div>Base de données<small>Retourne les données</small></div>
-            </div>
-            <p class="jq3-caption">JQuery se place entre votre application et votre base de données.</p>
-          </div>
-        </article>
-
-
-        <!-- ===== 3. Compatibilité (texte à gauche, visuel à droite) ===== -->
-        <article class="jq3-row">
-          <div class="jq3-text">
-            <div class="jq3-ico"><i class="ti ti-database"></i></div>
-            <h3>Compatibilité</h3>
-            <p>
-              Compatible avec différentes bases de données, une même approche permet d'accéder aux données,
-              quelle que soit la technologie utilisée.
-            </p>
-            <p><strong>JQuery détecte le dialecte de votre base et génère la requête adaptée.</strong></p>
-          </div>
-
-          <div class="jq3-visual">
-            <div class="jq-flow jq3-stagger">
-              <div>Ce que vous voulez<small>Votre besoin</small></div>
-              <div class="a">→</div>
-              <div class="m jq3-multi">
-                JQuery
-                <ol class="jq3-sub">
-                  <li>Détecte le dialecte</li>
-                  <li>Construit la requête</li>
-                </ol>
-                <span class="jq3-chips"><b>PostgreSQL</b><b>TeraData</b><b>Oracle</b><b>…</b></span>
+              <div class="jq4-req">
+                <div class="jq4-q"><span class="jq4-q-base">/customers</span><span
+                    class="jq4-q-var">?select=name,country</span></div>
+                <div class="jq4-d">Afficher le nom et le pays de tous les clients</div>
               </div>
-              <div class="a">→</div>
-              <div>Requête<small>Adaptée au dialecte</small></div>
-              <div class="a">→</div>
-              <div>Base de données<small>Retourne les données</small></div>
+              <div class="jq4-req">
+                <div class="jq4-q"><span class="jq4-q-base">/customers</span><span
+                    class="jq4-q-var">?select=name,city&amp;country=France</span></div>
+                <div class="jq4-d">Afficher le nom et la ville des clients d'origine française</div>
+              </div>
+              <div class="jq4-req">
+                <div class="jq4-q"><span class="jq4-q-base">/customers</span><span
+                    class="jq4-q-var">?select=count,country</span></div>
+                <div class="jq4-d">Afficher le nombre de clients par pays</div>
+              </div>
+
+              <div class="jq4-term-foot">… et autant d'autres demandes que nécessaire, sans nouvelle API.</div>
             </div>
           </div>
-        </article>
+        </div>
+
+
+        <!-- ===== Accessibilité ===== -->
+        <div class="jq-card">
+          <div class="ico"><i class="ti ti-accessible"></i></div>
+          <h4>Accessibilité</h4>
+          <p>
+            Comprendre les principales notions liées à la manipulation des données suffit pour accéder
+            simplement aux données recherchées.
+          </p>
+          <p>La complexité nécessaire pour les obtenir est ensuite prise en charge par JQuery.</p>
+
+          <div class="jq4-vis">
+            <div class="jq4-steps">
+              <div class="jq4-step">
+                <span class="jq4-node"><i class="ti ti-bulb"></i></span>
+                <span class="jq4-lbl">Ce que vous voulez</span>
+                <span class="jq4-sub">Votre besoin</span>
+              </div>
+              <div class="jq4-step is-main">
+                <span class="jq4-node"><i class="ti ti-bolt"></i></span>
+                <span class="jq4-lbl">JQuery</span>
+                <span class="jq4-sub">Construit la requête</span>
+              </div>
+              <div class="jq4-step">
+                <span class="jq4-node">
+                  <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m8 8-4 4 4 4" />
+                    <path d="m16 8 4 4-4 4" />
+                  </svg>
+                </span>
+                <span class="jq4-lbl">Requête</span>
+                <span class="jq4-sub">Générée pour vous</span>
+              </div>
+              <div class="jq4-step">
+                <span class="jq4-node"><i class="ti ti-database"></i></span>
+                <span class="jq4-lbl">Base de données</span>
+                <span class="jq4-sub">Retourne les données</span>
+              </div>
+            </div>
+            <div class="jq4-cap">JQuery se place entre votre application et votre base de données.</div>
+          </div>
+        </div>
+
+
+        <!-- ===== Compatibilité ===== -->
+        <div class="jq-card">
+          <div class="ico"><i class="ti ti-database"></i></div>
+          <h4>Compatibilité</h4>
+          <p>
+            Compatible avec différentes bases de données, une même approche permet d'accéder aux données,
+            quelle que soit la technologie utilisée.
+          </p>
+          <p><strong>JQuery détecte le dialecte de votre base et génère la requête adaptée.</strong></p>
+
+          <div class="jq4-vis">
+            <div class="jq4-steps jq4-steps--lift">
+
+              <!-- Ligne qui monte vers l'étape de détection, puis redescend -->
+              <svg class="jq4-lift-line" viewBox="0 0 400 72" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="jq4-lg" gradientUnits="userSpaceOnUse" x1="50" y1="0" x2="350" y2="0">
+                    <stop offset="0" stop-color="#2b8ed6" />
+                    <stop offset=".4" stop-color="#6d5ae6" />
+                    <stop offset="1" stop-color="#12b5a6" />
+                  </linearGradient>
+                </defs>
+                <path d="M50 60 C100 60 100 28 150 28 C200 28 200 60 250 60 L350 60" fill="none" stroke="url(#jq4-lg)"
+                  stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+              </svg>
+
+              <div class="jq4-step">
+                <span class="jq4-node"><i class="ti ti-bulb"></i></span>
+                <span class="jq4-lbl">Ce que vous voulez</span>
+                <span class="jq4-sub">Votre besoin</span>
+              </div>
+
+              <div class="jq4-step is-main is-lift is-detect">
+                <span class="jq4-node"><i class="ti ti-search"></i></span>
+                <span class="jq4-lbl">JQuery détecte le dialecte</span>
+                <span class="jq4-sub">Identifie votre base</span>
+              </div>
+
+              <div class="jq4-step is-main">
+                <span class="jq4-node">
+                  <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m8 8-4 4 4 4" />
+                    <path d="m16 8 4 4-4 4" />
+                  </svg>
+                </span>
+                <span class="jq4-lbl">JQuery génère la requête</span>
+                <span class="jq4-sub">Adaptée au dialecte</span>
+              </div>
+
+              <div class="jq4-step">
+                <span class="jq4-node"><i class="ti ti-database"></i></span>
+                <span class="jq4-lbl">Base de données</span>
+                <span class="jq4-sub">Exécute la requête</span>
+              </div>
+
+            </div>
+
+            <div class="jq4-cap">Quelle que soit votre base de données, JQuery détecte son dialecte et adapte la
+              requête.</div>
+          </div>
+        </div>
 
       </div>
 
-      <h2>Comment fonctionne JQuery ?</h2>
+      <!-- <h2>Comment fonctionne JQuery ?</h2>
 
       <p>
         JQuery se place entre votre application et votre base de données.
@@ -559,7 +607,7 @@ HAVING
       <p>
         Vous n'avez pas à gérer chaque détail nécessaire pour obtenir le résultat.
         JQuery prend en charge cette partie afin de vous permettre de vous concentrer sur les données recherchées.
-      </p>
+      </p> -->
 
 
       <h2>Une approche centrée sur les données</h2>
