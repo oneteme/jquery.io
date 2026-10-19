@@ -675,76 +675,332 @@ header {
 }
 
 /* Why JQuery — icon card grid */
- /* ----- Cartes d'origine, une par ligne : texte à gauche, présentation à droite ----- */
-  .jq-grid.jq4-list{display:grid!important;grid-template-columns:1fr!important;gap:1.25rem}
-  .jq-grid.jq4-list .jq-card{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)!important;grid-template-rows:auto auto auto 1fr;
-    column-gap:2.5rem;row-gap:0;align-items:start;width:auto;max-width:none}
-  .jq-grid.jq4-list .jq-card>*{grid-column:1}
-  .jq-grid.jq4-list .jq-card>.jq4-vis{grid-column:2!important;grid-row:1 / span 4;align-self:center}
- 
-  .jq4-vis{min-width:0;box-sizing:border-box}
-  .jq4-vis *{box-sizing:border-box}
- 
-  /* ----- 1. Une seule API, trois demandes ----- */
-  .jq4-term{border-radius:12px;overflow:hidden;background:#111827;color:#e5e7eb}
-  .jq4-term-head{display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:.65rem .9rem;
-    border-bottom:1px solid rgba(255,255,255,.1);font-size:.8rem;color:#94a3b8}
-  .jq4-term-tag{padding:.12rem .6rem;border-radius:6px;background:#12b5a6;color:#fff;font-size:.72rem;font-weight:700}
-  .jq4-req{padding:.7rem .9rem;border-bottom:1px solid rgba(255,255,255,.07)}
-  .jq4-q{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;line-height:1.4;word-break:break-all}
-  .jq4-q-base{color:#94a3b8}
-  .jq4-q-var{color:#7dd3fc}
-  .jq4-d{margin-top:.25rem;font-size:.85rem;line-height:1.4;color:#cbd5e1}
-  .jq4-d::before{content:"\2192\00a0";color:#12b5a6;font-weight:700}
-  .jq4-term-foot{padding:.6rem .9rem;font-size:.78rem;color:#94a3b8}
- 
-  /* ----- 2 et 3. Étapes ----- */
-  .jq4-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));position:relative}
-  .jq4-steps::before{content:"";position:absolute;top:1.75rem;left:12.5%;right:12.5%;height:2px;border-radius:2px;
-    background:linear-gradient(90deg,#2b8ed6,#12b5a6)}
-  .jq4-step{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 .3rem}
-  .jq4-node{width:3.5rem;height:3.5rem;display:grid;place-items:center;border-radius:50%;font-size:1.5rem;line-height:1;
-    background:#fff;background:Canvas;color:#2b8ed6;border:2px solid #9ccbee}
-  .jq4-step.is-main .jq4-node{width:4.25rem;height:4.25rem;margin-top:-.375rem;font-size:1.8rem;color:#fff;
-    background:#2b8ed6;border-color:#2b8ed6;box-shadow:0 0 0 6px rgba(43,142,214,.18)}
-  .jq4-lbl{display:block;margin-top:.7rem;font-size:.88rem;font-weight:600;line-height:1.25;color:inherit}
-  .jq4-sub{display:block;margin-top:.2rem;font-size:.76rem;line-height:1.3;opacity:.7;color:inherit}
-  .jq4-step.is-main .jq4-lbl{margin-top:.325rem}
-  .jq4-cap{margin-top:1rem;font-size:.85rem;text-align:center;opacity:.75}
- 
-  /* Accolade « JQuery » au-dessus des étapes 2 et 3 */
-  .jq4-brace{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:.9rem}
-  .jq4-brace span{grid-column:2 / 4;position:relative;margin:0 1.4rem;padding-bottom:.4rem;text-align:center;
-    font-size:.8rem;font-weight:700;letter-spacing:.04em;color:#2b8ed6;border-bottom:2px solid #2b8ed6}
-  .jq4-brace span::before,.jq4-brace span::after{content:"";position:absolute;bottom:-2px;width:2px;height:.5rem;background:#2b8ed6}
-  .jq4-brace span::before{left:0}
-  .jq4-brace span::after{right:0}
- 
-  /* Dialectes */
-  .jq4-dialects{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem;margin-top:1.2rem}
-  .jq4-dl{font-size:.82rem;opacity:.75}
-  .jq4-chip{display:inline-flex;align-items:center;gap:.4rem;padding:.2rem .75rem;border-radius:999px;font-size:.8rem;font-weight:600;
-    color:#2b8ed6;background:rgba(43,142,214,.1)}
-  .jq4-chip i{font-size:1rem}
- 
-  /* ----- Responsive ----- */
-  @media(max-width:860px){
-    .jq-grid.jq4-list .jq-card{grid-template-columns:1fr!important;grid-template-rows:none}
-    .jq-grid.jq4-list .jq-card>.jq4-vis{grid-column:1!important;grid-row:auto;margin-top:1.2rem}
+/* ----- Cartes d'origine, une par ligne : texte à gauche, présentation à droite ----- */
+.jq-grid.jq4-list {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 1.25rem
+}
+
+.jq-grid.jq4-list .jq-card {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) !important;
+  grid-template-rows: auto auto auto 1fr;
+  column-gap: 2.5rem;
+  row-gap: 0;
+  align-items: start;
+  width: auto;
+  max-width: none
+}
+
+.jq-grid.jq4-list .jq-card>* {
+  grid-column: 1
+}
+
+.jq-grid.jq4-list .jq-card>.jq4-vis {
+  grid-column: 2 !important;
+  grid-row: 1 / span 4;
+  align-self: center
+}
+
+.jq4-vis {
+  min-width: 0;
+  box-sizing: border-box
+}
+
+.jq4-vis * {
+  box-sizing: border-box
+}
+
+/* ----- 1. Une seule API, trois demandes ----- */
+.jq4-term {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111827;
+  color: #e5e7eb
+}
+
+.jq4-term-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+  padding: .65rem .9rem;
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
+  font-size: .8rem;
+  color: #94a3b8
+}
+
+.jq4-term-tag {
+  padding: .12rem .6rem;
+  border-radius: 6px;
+  background: #12b5a6;
+  color: #fff;
+  font-size: .72rem;
+  font-weight: 700
+}
+
+.jq4-req {
+  padding: .7rem .9rem;
+  border-bottom: 1px solid rgba(255, 255, 255, .07)
+}
+
+.jq4-q {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .82rem;
+  line-height: 1.4;
+  word-break: break-all
+}
+
+.jq4-q-base {
+  color: #94a3b8
+}
+
+.jq4-q-var {
+  color: #7dd3fc
+}
+
+.jq4-d {
+  margin-top: .25rem;
+  font-size: .85rem;
+  line-height: 1.4;
+  color: #cbd5e1
+}
+
+.jq4-d::before {
+  content: "\2192\00a0";
+  color: #12b5a6;
+  font-weight: 700
+}
+
+.jq4-term-foot {
+  padding: .6rem .9rem;
+  font-size: .78rem;
+  color: #94a3b8
+}
+
+/* ----- 2 et 3. Étapes ----- */
+.jq4-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  position: relative
+}
+
+.jq4-steps::before {
+  content: "";
+  position: absolute;
+  top: 1.75rem;
+  left: 12.5%;
+  right: 12.5%;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #2b8ed6, #12b5a6)
+}
+
+.jq4-step {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 .3rem
+}
+
+.jq4-node {
+  width: 3.5rem;
+  height: 3.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  line-height: 1;
+  background: #fff;
+  background: Canvas;
+  color: #2b8ed6;
+  border: 2px solid #9ccbee
+}
+
+.jq4-step.is-main .jq4-node {
+  width: 4.25rem;
+  height: 4.25rem;
+  margin-top: -.375rem;
+  font-size: 1.8rem;
+  color: #fff;
+  background: #2b8ed6;
+  border-color: #2b8ed6;
+  box-shadow: 0 0 0 6px rgba(43, 142, 214, .18)
+}
+
+.jq4-lbl {
+  display: block;
+  margin-top: .7rem;
+  font-size: .88rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: inherit
+}
+
+.jq4-sub {
+  display: block;
+  margin-top: .2rem;
+  font-size: .76rem;
+  line-height: 1.3;
+  opacity: .7;
+  color: inherit
+}
+
+.jq4-step.is-main .jq4-lbl {
+  margin-top: .325rem
+}
+
+.jq4-cap {
+  margin-top: 1rem;
+  font-size: .85rem;
+  text-align: center;
+  opacity: .75
+}
+
+/* Accolade « JQuery » au-dessus des étapes 2 et 3 */
+.jq4-brace {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: .9rem
+}
+
+.jq4-brace span {
+  grid-column: 2 / 4;
+  position: relative;
+  margin: 0 1.4rem;
+  padding-bottom: .4rem;
+  text-align: center;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: #2b8ed6;
+  border-bottom: 2px solid #2b8ed6
+}
+
+.jq4-brace span::before,
+.jq4-brace span::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  width: 2px;
+  height: .5rem;
+  background: #2b8ed6
+}
+
+.jq4-brace span::before {
+  left: 0
+}
+
+.jq4-brace span::after {
+  right: 0
+}
+
+/* Dialectes */
+.jq4-dialects {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  margin-top: 1.2rem
+}
+
+.jq4-dl {
+  font-size: .82rem;
+  opacity: .75
+}
+
+.jq4-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .2rem .75rem;
+  border-radius: 999px;
+  font-size: .8rem;
+  font-weight: 600;
+  color: #2b8ed6;
+  background: rgba(43, 142, 214, .1)
+}
+
+.jq4-chip i {
+  font-size: 1rem
+}
+
+/* ----- Responsive ----- */
+@media(max-width:860px) {
+  .jq-grid.jq4-list .jq-card {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: none
   }
-  @media(max-width:520px){.jq4-lbl{font-size:.78rem}.jq4-sub{font-size:.68rem}}
-  /* Variante « étape surélevée » */
-  .jq4-steps--lift{padding-top:2rem}
-  .jq4-steps--lift::before{display:none}                 /* l'ancienne ligne droite est remplacée par le SVG */
-  .jq4-lift-line{position:absolute;left:0;top:0;width:100%;height:4.5rem;z-index:0;overflow:visible;pointer-events:none}
-  .jq4-step.is-lift{transform:translateY(-2rem)}
- 
-  /* Étape de détection : couleur distincte (indigo) */
-  .jq4-step.is-detect .jq4-node{background:linear-gradient(135deg,#7a68ee,#4f46e5);border-color:#5b4fe0;
-    box-shadow:0 0 0 6px rgba(99,86,230,.2),0 8px 18px rgba(79,70,229,.28)}
-  .jq4-step.is-detect .jq4-lbl{color:#4f46e5}
+
+  .jq-grid.jq4-list .jq-card>.jq4-vis {
+    grid-column: 1 !important;
+    grid-row: auto;
+    margin-top: 1.2rem
+  }
+}
+
+@media(max-width:520px) {
+  .jq4-lbl {
+    font-size: .78rem
+  }
+
+  .jq4-sub {
+    font-size: .68rem
+  }
+}
+
+/* Variante « étape surélevée » */
+.jq4-steps--lift {
+  padding-top: 2rem
+}
+
+.jq4-steps--lift::before {
+  display: none
+}
+
+/* l'ancienne ligne droite est remplacée par le SVG */
+.jq4-lift-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 4.5rem;
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none
+}
+
+.jq4-step.is-lift {
+  transform: translateY(-2rem)
+}
+
+/* Étape de détection : couleur distincte (indigo) */
+.jq4-step.is-detect .jq4-node {
+  background: linear-gradient(135deg, #7a68ee, #4f46e5);
+  border-color: #5b4fe0;
+  box-shadow: 0 0 0 6px rgba(99, 86, 230, .2), 0 8px 18px rgba(79, 70, 229, .28)
+}
+
+.jq4-step.is-detect .jq4-lbl {
+  color: #4f46e5
+}
+
 /* Optionnel : retire la barre bleue que votre site ajoute aux <h3> dans cette section */
 /* .jq3-text h3{border-left:0;padding-left:0} */
+.jq2-kicker {
+  display: block;
+  margin-bottom: .5rem;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #2b8ed6
+}
 
 .jq-grid {
   display: grid;
