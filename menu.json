@@ -1,9 +1,5 @@
 [
   {
-    "title": "JQuery",
-    "items": "introduction.json"
-  },
-  {
     "title": "Getting started",
     "items": "setup.json"
   },
